@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer Dashboard</title>
+</head>
+<body>
+    <h2>Customer Dashboard</h2>
+    <a th:href="@{/customer/rooms}">View Rooms</a> | 
+    <a th:href="@{/logout}">Logout</a>
+    
+    <h3>Your Bookings</h3>
+    <ul th:each="booking : ${bookings}">
+        <li th:text="${booking.room.roomNumber} + ' - ' + ${booking.checkInDate} + ' to ' + ${booking.checkOutDate} + ' - ' + ${booking.status}"></li>
+    </ul>
+</body>
+</html>

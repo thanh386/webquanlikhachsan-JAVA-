@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Bookings</title>
+</head>
+<body>
+    <h2>Manage Bookings</h2>
+    <a th:href="@{/admin/dashboard}">Back to Dashboard</a>
+    
+    <h3>Bookings</h3>
+    <ul th:each="booking : ${bookings}">
+        <li th:text="${booking.user.username} + ' - ' + ${booking.room.roomNumber} + ' - ' + ${booking.checkInDate} + ' to ' + ${booking.checkOutDate} + ' - ' + ${booking.status}">
+            <a th:if="${booking.status == 'Confirmed'}" th:href="@{'/admin/bookings/cancel/' + ${booking.id}}">Cancel</a>
+        </li>
+    </ul>
+</body>
+</html>

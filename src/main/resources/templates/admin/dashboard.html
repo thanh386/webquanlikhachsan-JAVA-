@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h2>Admin Dashboard</h2>
+    <a th:href="@{/admin/rooms}">Manage Rooms</a> | 
+    <a th:href="@{/admin/bookings}">Manage Bookings</a> | 
+    <a th:href="@{/logout}">Logout</a>
+    
+    <h3>Rooms</h3>
+    <ul th:each="room : ${rooms}">
+        <li th:text="${room.roomNumber} + ' - ' + ${room.status}"></li>
+    </ul>
+    
+    <h3>Bookings</h3>
+    <ul th:each="booking : ${bookings}">
+        <li th:text="${booking.user.username} + ' - ' + ${booking.room.roomNumber} + ' - ' + ${booking.status}"></li>
+    </ul>
+</body>
+</html>
