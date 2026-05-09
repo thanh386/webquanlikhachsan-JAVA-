@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/customer-layout}"
+      th:with="pageTitle='Trang chủ - Azure Coast Resort'">
+<body>
+<section layout:fragment="content">
+    <!-- 1. Hero Section -->
+    <section class="relative isolate flex min-h-screen items-center overflow-hidden bg-navy-950">
+        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=90" alt="Azure Coast Resort" class="absolute inset-0 h-full w-full object-cover scale-105 animate-slow-zoom" />
+        <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-navy-950/80 via-transparent to-transparent"></div>
+
+        <div class="relative mx-auto w-full max-w-7xl px-4 pt-20 sm:px-6 lg:px-8">
+            <div class="max-w-3xl space-y-8" data-reveal>
+                <div class="inline-flex items-center gap-3 rounded-full bg-gold-500/10 px-4 py-2 text-[10px] font-bold uppercase text-gold-400 backdrop-blur-md border border-gold-500/20">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-gold-500"></span>
+                    </span>
+                    Azure Coast Luxury Resort
+                </div>
+                <h1 class="font-serif text-5xl font-black leading-[1.1] text-white sm:text-7xl lg:text-8xl">
+                    Nơi Di Sản <br/><span class="text-gold-400 italic">Hội Tụ.</span>
+                </h1>
+                <p class="max-w-2xl text-lg leading-relaxed text-slate-300">
+                    Trải nghiệm kỳ nghỉ dưỡng thượng lưu tại dải bờ biển đẹp nhất Việt Nam, nơi mỗi chi tiết đều được chăm chút để tôn vinh sự riêng tư và sang trọng của bạn.
+                </p>
+                <div class="flex flex-wrap gap-5">
+                    <a href="#featured-rooms" class="btn-gold !py-4 !px-10">
+                        <i class="fa-solid fa-calendar-days"></i> Đặt phòng ngay
+                    </a>
+                    <a href="#about-story" class="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-4 text-sm font-bold text-white transition hover:bg-white/10 hover:border-white/40">
+                        Câu chuyện của chúng tôi <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Floating Search Bar -->
+    <div class="relative z-30 mx-auto -mt-16 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+        <form th:action="@{/}" method="get" class="premium-card !p-3 grid gap-3 lg:grid-cols-[1.2fr_1.2fr_0.8fr_auto]" data-reveal>
+            <div class="group relative rounded-2xl bg-slate-50 p-3 transition focus-within:bg-white focus-within:ring-2 focus-within:ring-gold-500/20">
+                <span class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Nhận phòng</span>
+                <div class="flex items-center gap-2">
+                    <i class="fa-regular fa-calendar text-gold-500"></i>
+                    <input type="date" name="checkInDate" th:value="${searchCheckInDate}" th:min="${today}" class="w-full border-0 bg-transparent p-0 text-sm font-bold text-navy-950 focus:ring-0" />
+                </div>
+            </div>
+            <div class="group relative rounded-2xl bg-slate-50 p-3 transition focus-within:bg-white focus-within:ring-2 focus-within:ring-gold-500/20">
+                <span class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Trả phòng</span>
+                <div class="flex items-center gap-2">
+                    <i class="fa-regular fa-calendar-check text-gold-500"></i>
+                    <input type="date" name="checkOutDate" th:value="${searchCheckOutDate}" th:min="${searchCheckInDate}" class="w-full border-0 bg-transparent p-0 text-sm font-bold text-navy-950 focus:ring-0" />
+                </div>
+            </div>
+            <div class="group relative rounded-2xl bg-slate-50 p-3 transition focus-within:bg-white focus-within:ring-2 focus-within:ring-gold-500/20">
+                <span class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Số khách</span>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-user-group text-gold-500"></i>
+                    <select name="guests" class="w-full border-0 bg-transparent p-0 text-sm font-bold text-navy-950 focus:ring-0">
+                        <option value="1" th:selected="${guests == 1}">1 Người</option>
+                        <option value="2" th:selected="${guests == 2}">2 Người</option>
+                        <option value="3" th:selected="${guests == 3}">3 Người</option>
+                        <option value="4" th:selected="${guests == 4}">4 Người</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn-navy !rounded-2xl !px-10 shadow-xl group">
+                <i class="fa-solid fa-magnifying-glass group-hover:scale-110 transition-transform"></i>
+                <span class="ml-2">Tìm Phòng</span>
+            </button>
+        </form>
+    </div>
+
+    <!-- 3. Story Section -->
+    <section id="about-story" class="mx-auto max-w-7xl px-4 py-32 sm:px-6 lg:px-8 overflow-hidden">
+        <div class="grid gap-16 lg:grid-cols-2 lg:items-center">
+            <div class="relative" data-reveal>
+                <div class="aspect-[4/5] rounded-[40px] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80" alt="Lobby" class="h-full w-full object-cover" />
+                </div>
+                <div class="absolute -bottom-10 -right-10 premium-card !p-8 !bg-gold-500 text-white max-w-[280px]">
+                    <div class="font-serif text-4xl font-bold mb-2">15+</div>
+                    <p class="text-xs font-bold uppercase text-white/80 leading-relaxed">Năm kinh nghiệm trong ngành dịch vụ khách sạn 5 sao.</p>
+                </div>
+            </div>
+            <div class="space-y-8" data-reveal>
+                <div>
+                    <p class="text-xs font-bold uppercase text-gold-500 mb-4 tracking-[0.1em]">Philosophy</p>
+                    <h2 class="font-serif text-4xl font-bold text-slate-900 sm:text-5xl leading-tight">Tuyệt tác kiến trúc giữa <span class="text-gold-500 italic">lòng đại dương.</span></h2>
+                </div>
+                <p class="text-slate-500 text-lg leading-relaxed">Azure Coast không chỉ là một nơi để ở, mà là một điểm đến của tâm hồn. Chúng tôi tin rằng sự sang trọng thực sự nằm ở sự tĩnh lặng và những trải nghiệm được cá nhân hóa hoàn hảo.</p>
+                <div class="grid grid-cols-2 gap-8">
+                    <div class="space-y-3">
+                        <div class="h-px w-12 bg-gold-500"></div>
+                        <h4 class="font-bold text-navy-950">Phòng suite riêng tư</h4>
+                        <p class="text-sm text-slate-400">Tối ưu hóa không gian cho sự nghỉ ngơi tuyệt đối.</p>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="h-px w-12 bg-gold-500"></div>
+                        <h4 class="font-bold text-navy-950">Vị trí đắc địa</h4>
+                        <p class="text-sm text-slate-400">Tọa lạc ngay mặt biển với tầm nhìn panorama.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Featured Rooms Section -->
+    <section id="featured-rooms" class="bg-slate-50 py-32">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between mb-16" data-reveal>
+                <div class="max-w-2xl">
+                    <p class="text-xs font-bold uppercase text-gold-500 mb-4 tracking-[0.1em]">Accommodations</p>
+                    <h2 class="font-serif text-4xl font-bold text-slate-900 sm:text-5xl">Hạng phòng tuyệt mỹ.</h2>
+                </div>
+                <div th:if="${not #lists.isEmpty(rooms)}" class="flex items-center gap-2 text-sm font-bold text-slate-400">
+                    <span class="h-px w-12 bg-slate-200"></span>
+                    Khám phá <span class="text-navy-950" th:text="${#lists.size(rooms)}">0</span> lựa chọn đẳng cấp
+                </div>
+            </div>
+
+            <div th:if="${not #lists.isEmpty(rooms)}" class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+                <article th:each="room : ${rooms}" class="premium-card !p-0 group overflow-hidden border-0" data-reveal>
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <img th:src="${room.primaryImageUrl}" alt="Room" class="h-full w-full object-cover transition duration-700 group-hover:scale-110" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="absolute right-4 top-4">
+                            <span class="badge bg-white/90 text-navy-950 backdrop-blur-md" th:text="${room.type}">SUITE</span>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-1 text-[10px] text-amber-400">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase" th:text="${'No.' + room.roomNumber}">P.101</span>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-slate-900 mb-3 group-hover:text-gold-500 transition-colors" th:text="${room.type + ' Room'}">Hạng phòng</h3>
+                        <p class="text-sm text-slate-500 line-clamp-2 mb-8" th:text="${room.resolvedDescription}">Mô tả ngắn gọn.</p>
+                        
+                        <div class="flex items-center justify-between border-t border-slate-50 pt-6">
+                            <div>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">Giá từ</p>
+                                <p class="text-2xl font-black text-navy-950" th:text="${#numbers.formatDecimal(room.priceInVnd, 0, 'COMMA', 0, 'POINT')} + ' ₫'">0 ₫</p>
+                            </div>
+                            <!-- Nút Chi tiết cho người dùng đã đăng nhập -->
+                            <a sec:authorize="isAuthenticated()" th:href="@{/khach-hang/dat-phong/{roomId}(roomId=${room.id})}" class="btn-navy !px-6 !py-3 !text-[11px]">Chi tiết</a>
+                            
+                            <!-- Nút Chi tiết cho khách vãng lai -->
+                            <button sec:authorize="isAnonymous()" onclick="showLoginRequiredAlert()" class="btn-navy !px-6 !py-3 !text-[11px]">Chi tiết</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Services Section -->
+    <section id="services" class="py-32 relative overflow-hidden bg-navy-950 text-white">
+        <div class="absolute inset-0 opacity-5">
+            <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1920&q=80" class="h-full w-full object-cover" />
+        </div>
+        <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20" data-reveal>
+                <p class="text-xs font-bold uppercase text-gold-500 mb-4 tracking-[0.2em]">Amenities</p>
+                <h2 class="font-serif text-4xl font-bold sm:text-6xl">Dịch vụ đặc quyền.</h2>
+            </div>
+            
+            <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4" data-reveal>
+                <div class="premium-card !bg-white/5 !border-white/10 p-10 hover:!bg-gold-500 transition-all group">
+                    <i class="fa-solid fa-spa text-4xl text-gold-500 mb-6 group-hover:text-white"></i>
+                    <h4 class="text-xl font-bold mb-4">Wellness Spa</h4>
+                    <p class="text-sm text-slate-400 group-hover:text-white/80">Liệu trình truyền thống kết hợp công nghệ hiện đại.</p>
+                </div>
+                <div class="premium-card !bg-white/5 !border-white/10 p-10 hover:!bg-gold-500 transition-all group">
+                    <i class="fa-solid fa-champagne-glasses text-4xl text-gold-500 mb-6 group-hover:text-white"></i>
+                    <h4 class="text-xl font-bold mb-4">Sky Lounge</h4>
+                    <p class="text-sm text-slate-400 group-hover:text-white/80">Không gian thưởng thức cocktail dưới bầu trời sao.</p>
+                </div>
+                <div class="premium-card !bg-white/5 !border-white/10 p-10 hover:!bg-gold-500 transition-all group">
+                    <i class="fa-solid fa-person-swimming text-4xl text-gold-500 mb-6 group-hover:text-white"></i>
+                    <h4 class="text-xl font-bold mb-4">Infinity Pool</h4>
+                    <p class="text-sm text-slate-400 group-hover:text-white/80">Hồ bơi vô cực hòa quyện cùng đường chân trời.</p>
+                </div>
+                <div class="premium-card !bg-white/5 !border-white/10 p-10 hover:!bg-gold-500 transition-all group">
+                    <i class="fa-solid fa-umbrella-beach text-4xl text-gold-500 mb-6 group-hover:text-white"></i>
+                    <h4 class="text-xl font-bold mb-4">Private Beach</h4>
+                    <p class="text-sm text-slate-400 group-hover:text-white/80">Bãi biển riêng tư với bờ cát trắng mịn màng.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Testimonials -->
+    <section class="py-32 bg-white overflow-hidden">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-reveal>
+                <i class="fa-solid fa-quote-left text-4xl text-gold-500 mb-6"></i>
+                <h2 class="font-serif text-4xl font-bold text-slate-900">Lời khen tặng từ du khách.</h2>
+            </div>
+            
+            <div class="grid gap-8 md:grid-cols-3" data-reveal>
+                <div class="p-8 rounded-[32px] bg-slate-50 border border-slate-100">
+                    <p class="text-slate-600 italic mb-8">"Một trải nghiệm thực sự đẳng cấp. Dịch vụ tận tâm đến từng chi tiết nhỏ nhất. Tôi chắc chắn sẽ quay lại."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="h-12 w-12 rounded-full bg-navy-950 grid place-items-center text-white font-bold">M</div>
+                        <div>
+                            <p class="font-bold text-navy-950">Minh Trần</p>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase">Business Traveler</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-8 rounded-[32px] bg-slate-50 border border-slate-100">
+                    <p class="text-slate-600 italic mb-8">"Không gian nghỉ dưỡng tuyệt vời, bãi biển riêng rất yên tĩnh. Mọi thứ đều vượt mong đợi của gia đình tôi."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="h-12 w-12 rounded-full bg-navy-950 grid place-items-center text-white font-bold">H</div>
+                        <div>
+                            <p class="font-bold text-navy-950">Hương Ly</p>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase">Family Vacation</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-8 rounded-[32px] bg-slate-50 border border-slate-100">
+                    <p class="text-slate-600 italic mb-8">"Kiến trúc ở đây quá đẹp, mọi góc nhìn đều là một tác phẩm nghệ thuật. Thật sự là một nơi lý tưởng để xả stress."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="h-12 w-12 rounded-full bg-navy-950 grid place-items-center text-white font-bold">J</div>
+                        <div>
+                            <p class="font-bold text-navy-950">James Wilson</p>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase">Architect</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. FAQ Section -->
+    <section class="py-32 bg-slate-50">
+        <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-reveal>
+                <h2 class="font-serif text-4xl font-bold text-slate-900">Giải đáp thắc mắc.</h2>
+            </div>
+            
+            <div class="space-y-4" data-reveal>
+                <details class="group premium-card !p-0 overflow-hidden">
+                    <summary class="flex cursor-pointer items-center justify-between p-6 focus:outline-none">
+                        <span class="font-bold text-navy-950">Thời gian nhận và trả phòng như thế nào?</span>
+                        <span class="h-6 w-6 rounded-full bg-slate-50 grid place-items-center group-open:rotate-180 transition-transform">
+                            <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-6 text-sm text-slate-500 leading-relaxed">
+                        Thời gian nhận phòng là sau 14:00 và trả phòng trước 12:00 trưa. Nếu bạn muốn nhận phòng sớm hoặc trả phòng muộn, vui lòng liên hệ trước với chúng tôi để được kiểm tra tình trạng phòng trống.
+                    </div>
+                </details>
+                <details class="group premium-card !p-0 overflow-hidden">
+                    <summary class="flex cursor-pointer items-center justify-between p-6 focus:outline-none">
+                        <span class="font-bold text-navy-950">Khách sạn có dịch vụ đưa đón sân bay không?</span>
+                        <span class="h-6 w-6 rounded-full bg-slate-50 grid place-items-center group-open:rotate-180 transition-transform">
+                            <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-6 text-sm text-slate-500 leading-relaxed">
+                        Có, Azure Coast cung cấp dịch vụ xe Limousine đưa đón sân bay cao cấp. Vui lòng cung cấp thông tin chuyến bay của bạn ít nhất 24h trước khi đến.
+                    </div>
+                </details>
+                <details class="group premium-card !p-0 overflow-hidden">
+                    <summary class="flex cursor-pointer items-center justify-between p-6 focus:outline-none">
+                        <span class="font-bold text-navy-950">Tôi có thể hủy đặt phòng sau khi đã xác nhận không?</span>
+                        <span class="h-6 w-6 rounded-full bg-slate-50 grid place-items-center group-open:rotate-180 transition-transform">
+                            <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-6 text-sm text-slate-500 leading-relaxed">
+                        Chính sách hủy phòng phụ thuộc vào từng loại phòng và thời điểm đặt. Thông thường, bạn có thể hủy miễn phí trước 48h. Vui lòng kiểm tra chi tiết trong mục Lịch sử đặt phòng.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Required Modal -->
+    <div id="loginModal" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex min-h-screen items-center justify-center p-4 text-center sm:p-0">
+            <!-- Background Backdrop -->
+            <div class="fixed inset-0 bg-navy-950/80 backdrop-blur-sm transition-opacity" onclick="closeLoginModal()"></div>
+
+            <!-- Modal Panel -->
+            <div class="relative transform overflow-hidden rounded-[32px] bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg border border-slate-100" data-reveal>
+                <div class="bg-white px-8 pb-8 pt-10">
+                    <div class="text-center">
+                        <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gold-500/10 text-gold-500">
+                            <i class="fa-solid fa-user-lock text-3xl"></i>
+                        </div>
+                        <h3 class="font-serif text-3xl font-bold text-slate-900 mb-4" id="modal-title">Yêu cầu đăng nhập</h3>
+                        <p class="text-slate-500 leading-relaxed mb-8">
+                            Để xem chi tiết phòng và tận hưởng những ưu đãi đặc quyền tại <span class="font-bold text-navy-950">Azure Coast</span>, quý khách vui lòng đăng nhập vào tài khoản thành viên.
+                        </p>
+                        
+                        <div class="flex flex-col gap-3">
+                            <a th:href="@{/dang-nhap}" class="btn-navy !w-full justify-center !py-4 text-sm uppercase tracking-[0.2em]">
+                                Đăng nhập ngay
+                            </a>
+                            <button onclick="closeLoginModal()" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-gold-500 transition-colors py-2">
+                                Để sau
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showLoginRequiredAlert() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Ngăn cuộn trang khi mở modal
+        }
+
+        function closeLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = ''; // Cho phép cuộn trang lại
+        }
+
+        // Đóng modal khi nhấn phím Esc
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLoginModal();
+        });
+    </script>
+</section>
+</body>
+</html>

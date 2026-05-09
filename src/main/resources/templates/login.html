@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/site :: head('Đăng nhập')}"></head>
+
+<body class="bg-slate-50 font-sans antialiased text-slate-800">
+    <div class="min-h-screen flex">
+
+        <section
+            class="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-16 xl:px-32 bg-white relative z-10 shadow-[20px_0_40px_rgba(0,0,0,0.05)]">
+            <div class="max-w-md w-full mx-auto">
+
+                <div class="mb-10 text-center lg:text-left">
+                    <a th:href="@{/}" class="inline-flex items-center justify-center lg:justify-start gap-3 mb-8 group">
+                        <div
+                            class="h-12 w-12 rounded-xl bg-navy-950 text-gold-500 flex items-center justify-center text-xl font-bold shadow-md transition-transform group-hover:scale-105">
+                            <i class="fa-solid fa-water"></i>
+                        </div>
+                        <span class="text-xl font-extrabold tracking-tight text-navy-950">Azure Coast</span>
+                    </a>
+                    <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-3 tracking-tight">Đăng nhập</h1>
+                    <p class="text-slate-500 text-sm">Vui lòng đăng nhập để tiếp tục truy cập vào hệ thống.</p>
+                </div>
+
+                <div class="mb-6 space-y-3">
+                    <div class="p-4 rounded-xl bg-emerald-50/80 text-emerald-700 text-sm font-medium border border-emerald-100 flex items-start gap-3"
+                        th:if="${param.dangKyThanhCong}">
+                        <i class="fa-solid fa-circle-check mt-0.5"></i>
+                        <span>Đăng ký thành công. Vui lòng đăng nhập.</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-red-50/80 text-red-700 text-sm font-medium border border-red-100 flex items-start gap-3"
+                        th:if="${param.dangNhapSai}">
+                        <i class="fa-solid fa-triangle-exclamation mt-0.5"></i>
+                        <span>Tài khoản hoặc mật khẩu không chính xác.</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-blue-50/80 text-blue-700 text-sm font-medium border border-blue-100 flex items-start gap-3"
+                        th:if="${param.daDangXuat}">
+                        <i class="fa-solid fa-circle-info mt-0.5"></i>
+                        <span>Bạn đã đăng xuất an toàn.</span>
+                    </div>
+                </div>
+
+                <form th:action="@{/dang-nhap}" method="post" class="space-y-5">
+
+                    <div class="relative group">
+                        <input type="text" id="username" name="username" required autofocus
+                            class="block px-4 pb-3.5 pt-5 w-full text-sm text-slate-900 bg-slate-50 rounded-xl border border-slate-200 appearance-none focus:outline-none focus:ring-1 focus:ring-gold-500 focus:border-gold-500 focus:bg-white transition-all peer"
+                            placeholder=" " />
+                        <label for="username"
+                            class="absolute text-[13px] text-slate-400 duration-200 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-focus:text-gold-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-4 peer-focus:scale-75 peer-focus:-translate-y-3 cursor-text">
+                            Tên đăng nhập hoặc Email
+                        </label>
+                    </div>
+
+                    <div class="relative group">
+                        <input type="password" id="password" name="password" required
+                            class="block px-4 pr-12 pb-3.5 pt-5 w-full text-sm text-slate-900 bg-slate-50 rounded-xl border border-slate-200 appearance-none focus:outline-none focus:ring-1 focus:ring-gold-500 focus:border-gold-500 focus:bg-white transition-all peer"
+                            placeholder=" " />
+                        <label for="password"
+                            class="absolute text-[13px] text-slate-400 duration-200 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-focus:text-gold-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-4 peer-focus:scale-75 peer-focus:-translate-y-3 cursor-text">
+                            Mật khẩu
+                        </label>
+                        <button type="button" onclick="togglePassword()"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 transition-colors p-1 focus:outline-none rounded-md"
+                            aria-label="Hiện mật khẩu">
+                            <i class="fa-regular fa-eye" id="eyeIcon"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-1">
+                        <label class="flex items-center gap-2.5 cursor-pointer group">
+                            <div class="relative flex items-center justify-center">
+                                <input type="checkbox" name="remember-me"
+                                    class="peer h-4 w-4 cursor-pointer appearance-none rounded border border-slate-300 bg-white checked:border-gold-500 checked:bg-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/30 transition-all">
+                                <i
+                                    class="fa-solid fa-check absolute text-white text-[10px] opacity-0 peer-checked:opacity-100 pointer-events-none"></i>
+                            </div>
+                            <span
+                                class="text-sm font-medium text-slate-600 select-none group-hover:text-slate-900 transition-colors">Ghi
+                                nhớ tôi</span>
+                        </label>
+                        <a th:href="@{/quen-mat-khau}"
+                            class="text-sm font-semibold text-navy-900 hover:text-gold-600 transition-colors">Quên mật
+                            khẩu?</a>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full relative inline-flex items-center justify-center px-8 py-3.5 text-sm font-bold text-white transition-all duration-200 bg-navy-950 rounded-xl hover:bg-navy-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-navy-900 shadow-[0_8px_20px_-6px_rgba(10,15,29,0.3)] hover:-translate-y-0.5 active:translate-y-0">
+                        Đăng nhập
+                        <i class="fa-solid fa-arrow-right-to-bracket ml-2 opacity-70"></i>
+                    </button>
+                </form>
+
+                <div class="mt-8">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-slate-200"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-4 text-xs font-medium text-slate-400 uppercase tracking-wider bg-white">Hoặc
+                                tiếp tục với</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 grid grid-cols-2 gap-4">
+                        <button type="button"
+                            class="flex items-center justify-center w-full px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-200">
+                            <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5 mr-2"
+                                alt="Google">
+                            Google
+                        </button>
+                        <button type="button"
+                            class="flex items-center justify-center w-full px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-200">
+                            <i class="fa-brands fa-apple text-lg mr-2 mb-0.5"></i>
+                            Apple
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-10 text-center space-y-4">
+                    <p class="text-sm font-medium text-slate-600">
+                        Chưa có tài khoản?
+                        <a th:href="@{/dang-ky}"
+                            class="font-bold text-gold-600 hover:text-gold-500 transition-colors">Đăng ký ngay</a>
+                    </p>
+                    <div
+                        class="flex items-center justify-center gap-2 text-xs text-slate-400 bg-slate-50 py-2.5 px-4 rounded-lg">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Không phải máy tính của bạn? Sử dụng tab ẩn danh để bảo mật.</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <aside th:replace="~{fragments/site :: authShowcase}"></aside>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+    </script>
+</body>
+
+</html>

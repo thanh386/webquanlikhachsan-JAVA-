@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/admin-layout}" th:with="pageTitle='Quản lý nhân viên'">
+
+<body>
+    <section layout:fragment="content" class="space-y-8">
+        <section class="soft-card rounded-[34px] bg-white p-8 shadow-soft" data-reveal>
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div class="max-w-3xl">
+                    <p class="text-sm font-semibold uppercase tracking-[0.24em] text-gold-500">Internal Management</p>
+                    <h1 class="mt-3 text-4xl font-bold text-slate-900">Quản trị tài khoản nhân viên.</h1>
+                    <p class="mt-4 text-base leading-8 text-slate-500">
+                        Tạo tài khoản nhân viên nội bộ để đội ngũ vận hành có thể truy cập Portal quản trị, duyệt đơn và
+                        điều phối trạng thái phòng.
+                    </p>
+                </div>
+                <a href="#staff-form"
+                    class="inline-flex items-center gap-2 rounded-full bg-navy-900 px-6 py-3 text-sm font-semibold text-white shadow-lg transition duration-300 hover:-translate-y-0.5 hover:scale-[1.01]">
+                    <i class="fa-solid fa-plus"></i>
+                    Thêm nhân viên
+                </a>
+            </div>
+        </section>
+
+        <div th:if="${success}" class="rounded-[24px] bg-emerald-50 px-6 py-4 text-sm font-semibold text-emerald-700">
+            <i class="fa-solid fa-circle-check mr-2"></i>
+            <span th:text="${success}"></span>
+        </div>
+        <div th:if="${error}" class="rounded-[24px] bg-red-50 px-6 py-4 text-sm font-semibold text-red-600">
+            <i class="fa-solid fa-circle-exclamation mr-2"></i>
+            <span th:text="${error}"></span>
+        </div>
+
+        <div class="grid gap-8 xl:grid-cols-[1fr_380px]">
+            <!-- Danh sách nhân viên -->
+            <section class="soft-card rounded-[34px] bg-white p-8 shadow-soft" data-reveal>
+                <div class="overflow-hidden rounded-[28px] border border-slate-100">
+                    <table class="min-w-full text-left text-sm">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-6 py-4 font-semibold uppercase tracking-[0.18em] text-slate-400">Nhân viên
+                                </th>
+                                <th class="px-6 py-4 font-semibold uppercase tracking-[0.18em] text-slate-400">Liên hệ
+                                </th>
+                                <th class="px-6 py-4 font-semibold uppercase tracking-[0.18em] text-slate-400">Hành động
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="staff : ${staffs}" class="border-b border-slate-100 last:border-0">
+                                <td class="px-6 py-5">
+                                    <div class="flex items-center gap-4">
+                                        <div class="grid h-10 w-10 place-items-center rounded-full bg-navy-50 font-bold text-navy-900"
+                                            th:text="${#strings.substring(staff.displayName,0,1)}">N</div>
+                                        <div>
+                                            <p class="font-semibold text-slate-900" th:text="${staff.displayName}">
+                                                Nguyễn Văn A</p>
+                                            <p class="text-xs font-semibold uppercase tracking-wider text-slate-400"
+                                                th:text="${staff.username}">quantri</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-5">
+                                    <p class="text-slate-900" th:text="${staff.email}">mail@hotel.com</p>
+                                    <p class="mt-1 text-xs text-slate-500" th:text="${staff.phone}">0909 123 456</p>
+                                </td>
+                                <td class="px-6 py-5">
+                                    <form th:action="@{/quan-tri/nhan-vien/{id}/xoa(id=${staff.id})}" method="post">
+                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                        <button type="submit" class="text-red-400 hover:text-red-600 transition"
+                                            data-confirm-modal="Bạn có chắc muốn xóa nhân viên này?">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Form thêm mới -->
+            <aside id="staff-form" class="soft-card rounded-[34px] bg-white p-8 shadow-soft self-start" data-reveal>
+                <h3 class="text-2xl font-bold text-slate-900">Thêm nhân viên</h3>
+                <p class="mt-2 text-sm text-slate-500">Tạo tài khoản mới với quyền ROLE_NHAN_VIEN.</p>
+
+                <form th:action="@{/quan-tri/nhan-vien}" method="post" class="mt-6 space-y-4">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Họ và tên</label>
+                        <input type="text" name="fullName" required
+                            class="w-full rounded-2xl border-slate-100 bg-slate-50 px-4 py-3 text-sm focus:border-navy-950 focus:ring-0" />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Tên đăng nhập</label>
+                        <input type="text" name="username" required
+                            class="w-full rounded-2xl border-slate-100 bg-slate-50 px-4 py-3 text-sm focus:border-navy-950 focus:ring-0" />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Email</label>
+                        <input type="email" name="email" required
+                            class="w-full rounded-2xl border-slate-100 bg-slate-50 px-4 py-3 text-sm focus:border-navy-950 focus:ring-0" />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Mật khẩu</label>
+                        <input type="password" name="password" required
+                            class="w-full rounded-2xl border-slate-100 bg-slate-50 px-4 py-3 text-sm focus:border-navy-950 focus:ring-0" />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Điện thoại</label>
+                        <input type="tel" name="phone" required
+                            class="w-full rounded-2xl border-slate-100 bg-slate-50 px-4 py-3 text-sm focus:border-navy-950 focus:ring-0" />
+                    </div>
+                    <button type="submit"
+                        class="w-full rounded-2xl bg-navy-900 py-4 text-sm font-bold text-white shadow-lg transition hover:bg-navy-950">
+                        Xác nhận thêm
+                    </button>
+                </form>
+            </aside>
+        </div>
+    </section>
+</body>
+
+</html>

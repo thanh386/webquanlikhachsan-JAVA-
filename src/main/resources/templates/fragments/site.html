@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head(pageTitle)">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Language" content="vi" />
+    <title th:text="${pageTitle} + ' | Azure Coast Resort'">Azure Coast Resort</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,aspect-ratio"></script>
+
+    <script>
+        if (typeof tailwind !== 'undefined') {
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            navy: { 900: '#12192b', 950: '#0a0f1d' },
+                            gold: { 400: '#d4b67a', 500: '#c5a059', 600: '#b08d4b' }
+                        },
+                        fontFamily: {
+                            sans: ["Inter", "system-ui", "sans-serif"]
+                        }
+                    }
+                }
+            };
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+    <aside th:fragment="authShowcase"
+        class="hidden lg:flex flex-col justify-end w-1/2 bg-slate-900 relative overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop"
+            alt="Azure Coast Resort View"
+            class="absolute inset-0 w-full h-full object-cover object-center opacity-80 mix-blend-overlay" />
+
+        <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/60 to-transparent"></div>
+
+        <div class="relative z-10 p-16 xl:p-24 w-full">
+            <div class="max-w-xl">
+                <span
+                    class="inline-block py-1 px-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-semibold tracking-widest uppercase mb-6">
+                    Azure Coast Resort
+                </span>
+                <h2 class="text-4xl xl:text-5xl font-bold text-white mb-6 leading-[1.15]">
+                    Đánh thức mọi giác quan tại thiên đường nghỉ dưỡng.
+                </h2>
+                <p class="text-slate-300 text-lg leading-relaxed font-light mb-8">
+                    Hệ thống dịch vụ chuẩn 5 sao được tối ưu hóa. Dành cho những vị khách trân quý và đội ngũ vận hành
+                    tận tâm.
+                </p>
+
+                <div class="flex items-center gap-6 border-t border-white/10 pt-8">
+                    <div class="flex -space-x-3">
+                        <img class="w-10 h-10 rounded-full border-2 border-navy-950 object-cover"
+                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80"
+                            alt="Avatar">
+                        <img class="w-10 h-10 rounded-full border-2 border-navy-950 object-cover"
+                            src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80"
+                            alt="Avatar">
+                        <div
+                            class="w-10 h-10 rounded-full border-2 border-navy-950 bg-white text-navy-950 flex items-center justify-center text-xs font-bold">
+                            4.9★</div>
+                    </div>
+                    <div class="text-sm text-slate-300">
+                        <span class="text-white font-semibold block">Hơn 10,000+</span>
+                        lượt lưu trú hài lòng
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+</body>
+
+</html>

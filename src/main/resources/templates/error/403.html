@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/site :: head('Không có quyền truy cập')}"></head>
+<body class="auth-body">
+<div class="auth-layout">
+    <section class="auth-card" data-reveal>
+        <div class="auth-card__header">
+            <div class="auth-card__brand">
+                <span class="auth-card__brand-mark">!</span>
+                <span>Truy cập bị từ chối</span>
+            </div>
+            <h2 class="auth-card__title">Bạn không có quyền mở khu vực này.</h2>
+            <p class="auth-card__copy">
+                Vui lòng đăng nhập bằng tài khoản phù hợp hoặc quay về bảng điều khiển mà bạn được phép sử dụng.
+            </p>
+        </div>
+
+        <div class="button-row">
+            <a class="button button--primary" th:href="@{/bang-dieu-khien}">Về bảng điều khiển</a>
+            <a class="button button--ghost" th:href="@{/dang-nhap}">Về trang đăng nhập</a>
+        </div>
+    </section>
+
+    <aside th:replace="~{fragments/site :: authShowcase}"></aside>
+</div>
+</body>
+</html>

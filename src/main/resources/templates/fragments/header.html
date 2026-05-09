@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<body>
+    <header th:fragment="siteHeader(activePage)" id="mainHeader"
+        class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b border-transparent">
+
+        <style>
+            /* 1. Trạng thái mặc định (Nền Navy kính mờ để chữ luôn nổi bật trên mọi trang) */
+            #mainHeader {
+                background-color: rgba(10, 15, 29, 0.9);
+                /* Màu navy-950 với 90% opacity */
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                padding-top: 1.25rem;
+                padding-bottom: 1.25rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            #mainHeader .dynamic-text {
+                color: #ffffff;
+            }
+
+            #mainHeader .dynamic-text-muted {
+                color: rgba(255, 255, 255, 0.8);
+            }
+
+            #mainHeader .logo-box {
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                color: #c5a059;
+            }
+
+            #mainHeader .user-icon-bg {
+                background: rgba(255, 255, 255, 0.15);
+            }
+
+            #mainHeader .user-icon-bg:hover {
+                background: rgba(255, 255, 255, 0.25);
+            }
+
+            #mainHeader .header-divider {
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+
+            /* 2. Trạng thái khi cuộn (Nền trắng kính mờ, chữ tối) */
+            #mainHeader.is-scrolled {
+                background-color: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+                border-bottom-color: rgba(0, 0, 0, 0.05);
+                box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+            }
+
+            #mainHeader.is-scrolled .dynamic-text {
+                color: #0a0f1d;
+            }
+
+            #mainHeader.is-scrolled .dynamic-text-muted {
+                color: #475569;
+            }
+
+            #mainHeader.is-scrolled .logo-box {
+                background: #0a0f1d;
+                border-color: transparent;
+            }
+
+            #mainHeader.is-scrolled .user-icon-bg {
+                background: #f1f5f9;
+            }
+
+            #mainHeader.is-scrolled .user-icon-bg:hover {
+                background: #e2e8f0;
+            }
+
+            #mainHeader.is-scrolled .header-divider {
+                border-color: rgba(0, 0, 0, 0.1);
+            }
+
+            /* 3. Hiệu ứng gạch chân Menu cao cấp */
+            .nav-link-premium {
+                position: relative;
+                font-size: 0.75rem;
+                /* 12px */
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                transition: color 0.3s ease;
+            }
+
+            .nav-link-premium::after {
+                content: '';
+                position: absolute;
+                bottom: -6px;
+                left: 50%;
+                width: 0;
+                height: 2px;
+                background: #c5a059;
+                transition: all 0.3s ease;
+                transform: translateX(-50%);
+            }
+
+            .nav-link-premium:hover {
+                color: #c5a059 !important;
+            }
+
+            .nav-link-premium:hover::after,
+            .nav-link-active::after {
+                width: 100%;
+            }
+
+            .nav-link-active {
+                color: #c5a059 !important;
+            }
+        </style>
+
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a th:href="@{/}" class="flex items-center gap-3 group no-underline">
+                    <div
+                        class="logo-box grid h-10 w-10 place-items-center rounded-xl font-black text-lg transition-all duration-500 shadow-lg">
+                        AC
+                    </div>
+                    <div class="flex flex-col">
+                        <span
+                            class="text-xl font-black tracking-tight dynamic-text transition-colors duration-500 leading-none">Azure
+                            Coast</span>
+                        <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-gold-500 mt-1">Luxury
+                            Resort</span>
+                    </div>
+                </a>
+
+                <!-- Navigation Menu -->
+                <nav class="hidden md:flex items-center gap-10">
+                    <a th:href="@{/}" class="dynamic-text-muted nav-link-premium"
+                        th:classappend="${activePage == 'home' ? 'nav-link-active' : ''}">Trang chủ</a>
+
+                    <!-- Hiển thị khi chưa đăng nhập -->
+                    <th:block sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/#featured-rooms}" class="dynamic-text-muted nav-link-premium">Phòng nghỉ</a>
+                        <a th:href="@{/#services}" class="dynamic-text-muted nav-link-premium">Trải nghiệm</a>
+                    </th:block>
+
+                    <!-- Hiển thị cho Khách hàng -->
+                    <th:block sec:authorize="hasRole('KHACH_HANG')">
+                        <a th:href="@{/khach-hang/lich-su-dat-phong}" class="dynamic-text-muted nav-link-premium"
+                            th:classappend="${activePage == 'bookings' ? 'nav-link-active' : ''}">Phòng đã đặt</a>
+                        <a th:href="@{/khach-hang/ho-so}" class="dynamic-text-muted nav-link-premium"
+                            th:classappend="${activePage == 'profile' ? 'nav-link-active' : ''}">Cá nhân</a>
+                    </th:block>
+                </nav>
+
+                <!-- Auth & User Actions -->
+                <div class="flex items-center gap-6">
+                    <!-- Group: Chưa đăng nhập -->
+                    <div sec:authorize="!isAuthenticated()" class="hidden sm:flex items-center gap-6">
+                        <a th:href="@{/dang-nhap}"
+                            class="dynamic-text text-[11px] font-extrabold uppercase tracking-widest hover:text-gold-500 transition-colors">Đăng
+                            nhập</a>
+                        <a th:href="@{/dang-ky}"
+                            class="bg-gold-500 hover:bg-gold-400 text-navy-950 px-7 py-2.5 rounded-full text-[11px] font-black uppercase tracking-widest transition-all shadow-[0_4px_15px_rgba(197,160,89,0.3)] hover:-translate-y-0.5">Đặt
+                            chỗ</a>
+                    </div>
+
+                    <!-- Group: Đã đăng nhập -->
+                    <div sec:authorize="isAuthenticated()" class="flex items-center gap-4">
+                        <div class="hidden lg:flex flex-col items-end mr-1">
+                            <span class="text-[9px] font-black uppercase tracking-widest text-gold-500 mb-0.5">Welcome
+                                back</span>
+                            <span class="text-sm font-bold dynamic-text transition-colors duration-500"
+                                sec:authentication="name">User</span>
+                        </div>
+
+                        <div
+                            class="flex items-center gap-2 pl-5 border-l header-divider transition-colors duration-500">
+                            <!-- Nút Dashboard cho Nhân viên/Admin -->
+                            <a sec:authorize="hasRole('NHAN_VIEN')" th:href="@{/quan-tri/bang-dieu-khien}"
+                                class="h-10 w-10 grid place-items-center rounded-full bg-gold-500 text-white hover:bg-gold-400 transition-colors shadow-md hover:shadow-lg"
+                                title="Quản trị hệ thống">
+                                <i class="fa-solid fa-chart-pie text-sm"></i>
+                            </a>
+
+                            <!-- Nút Lịch sử cho Khách -->
+                            <a th:href="@{/khach-hang/lich-su-dat-phong}"
+                                class="user-icon-bg h-10 w-10 grid place-items-center rounded-full dynamic-text transition-colors duration-300"
+                                title="Lịch sử đặt phòng">
+                                <i class="fa-solid fa-clock-rotate-left text-sm"></i>
+                            </a>
+
+                            <!-- Nút Đăng xuất -->
+                            <form th:action="@{/dang-xuat}" method="post" class="m-0">
+                                <button type="submit"
+                                    class="user-icon-bg h-10 w-10 grid place-items-center rounded-full dynamic-text transition-colors duration-300 hover:!bg-red-50 hover:!text-red-500 group"
+                                    title="Đăng xuất">
+                                    <i
+                                        class="fa-solid fa-power-off text-sm group-hover:scale-110 transition-transform"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Nút Hamburger Menu (Mobile) -->
+                    <button class="md:hidden dynamic-text transition-colors duration-500">
+                        <i class="fa-solid fa-bars-staggered text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hdr = document.getElementById('mainHeader');
+
+            // Theo dõi sự kiện cuộn chuột để thêm class is-scrolled
+            const checkScroll = () => {
+                if (window.scrollY > 50) {
+                    hdr.classList.add('is-scrolled');
+                } else {
+                    hdr.classList.remove('is-scrolled');
+                }
+            };
+
+            window.addEventListener('scroll', checkScroll);
+            checkScroll(); // Chạy ngay lần đầu tải trang để xử lý trường hợp load trang ở giữa
+        });
+    </script>
+</body>
+
+</html>

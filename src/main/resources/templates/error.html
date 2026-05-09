@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/site :: head('Đã xảy ra lỗi')}"></head>
+<body class="auth-body">
+<div class="auth-layout">
+    <section class="auth-card" data-reveal>
+        <div class="auth-card__header">
+            <div class="auth-card__brand">
+                <span class="auth-card__brand-mark">!</span>
+                <span>Thông báo hệ thống</span>
+            </div>
+            <h2 class="auth-card__title">Trang bạn cần hiện không thể hiển thị.</h2>
+            <p class="auth-card__copy">
+                Hệ thống đã ghi nhận sự cố và giữ nguyên dữ liệu hiện tại. Bạn có thể quay lại đăng nhập hoặc về bảng điều khiển quản trị.
+            </p>
+        </div>
+
+        <div class="auth-meta">
+            <div class="auth-note">
+                <p class="auth-note__title">Mã trạng thái</p>
+                <p class="panel-copy" th:text="${status != null ? status : 'Không xác định'}">500</p>
+            </div>
+            <div class="auth-note" th:if="${error}">
+                <p class="auth-note__title">Loại lỗi</p>
+                <p class="panel-copy" th:text="${error}">Lỗi máy chủ</p>
+            </div>
+            <div class="auth-note" th:if="${path}">
+                <p class="auth-note__title">Đường dẫn</p>
+                <p class="panel-copy" th:text="${path}">/duong-dan</p>
+            </div>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-4">
+            <a class="inline-flex items-center justify-center rounded-full bg-navy-950 px-6 py-3 text-sm font-bold text-white shadow-lg hover:bg-black transition" th:href="@{/dang-nhap}">Về trang đăng nhập</a>
+            <a class="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-sm font-bold text-slate-600 hover:bg-slate-50 transition" th:href="@{/quan-tri/bang-dieu-khien}">Về bảng điều khiển</a>
+        </div>
+    </section>
+
+    <aside th:replace="~{fragments/site :: authShowcase}"></aside>
+</div>
+</body>
+</html>

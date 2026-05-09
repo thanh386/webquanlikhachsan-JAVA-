@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --navy-950: #0a0f1d;
+    --navy-900: #12192b;
+    --navy-800: #1a243d;
+    --gold-600: #b08d4a;
+    --gold-500: #c5a059;
+    --gold-400: #d4b67a;
+    --slate-50:  #f8fafc;
+    --slate-100: #f1f5f9;
+    --slate-200: #e2e8f0;
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
+    --slate-600: #475569;
+    --slate-900: #0f172a;
+    --white: #ffffff;
+}
+
+.bg-navy-950 { background-color: var(--navy-950) !important; }
+.bg-navy-900 { background-color: var(--navy-900) !important; }
+.bg-slate-50 { background-color: var(--slate-50) !important; }
+.text-white { color: var(--white) !important; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--slate-50);
+    color: var(--navy-950);
+    line-height: 1.6;
+}
+
+/* --- Header Fixed Colors --- */
+.main-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--white) !important; /* Mặc định trắng cho Home Hero */
+}
+
+.main-header .logo-text, .main-header .nav-link { 
+    color: var(--white) !important; 
+}
+
+/* Trạng thái ép màu tối (is-scrolled hoặc is-dark-text) */
+.main-header.is-scrolled, 
+.main-header.is-dark-text {
+    background: rgba(255, 255, 255, 0.98) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+    padding: 0.85rem 0 !important;
+}
+
+.main-header.is-scrolled .logo-text, 
+.main-header.is-scrolled .nav-link,
+.main-header.is-dark-text .logo-text,
+.main-header.is-dark-text .nav-link {
+    color: var(--navy-950) !important; /* ÉP MÀU TỐI TUYỆT ĐỐI */
+}
+
+/* Logo icon background change on scroll */
+.main-header.is-scrolled .logo-icon-bg,
+.main-header.is-dark-text .logo-icon-bg {
+    background-color: var(--navy-950) !important;
+}
+
+/* --- Typography --- */
+h1, h2, h3, .font-serif { font-family: 'Playfair Display', serif; }
+p, span, a, li { letter-spacing: 0 !important; }
+
+.premium-card {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 1.5rem;
+    border: 1px solid var(--slate-100);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.btn-gold {
+    background: var(--gold-500) !important;
+    color: var(--white) !important;
+    border-radius: 100px;
+    font-weight: 700;
+    padding: 0.75rem 1.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin-layout}"
+      th:with="pageTitle='Quản lý phòng'">
+<body>
+<section layout:fragment="content" class="space-y-8">
+    <!-- Header -->
+    <header class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between" data-reveal>
+        <div>
+            <nav class="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-gold-500">
+                <span>Inventory</span>
+                <i class="fa-solid fa-chevron-right text-[8px] text-slate-300"></i>
+                <span class="text-slate-400">Rooms</span>
+            </nav>
+            <h1 class="mt-3 text-4xl font-extrabold tracking-tight text-slate-900 lg:text-5xl">Danh mục phòng nghỉ.</h1>
+            <p class="mt-3 text-slate-500">Cấu hình thông số kỹ thuật, giá và tình trạng vận hành của từng phòng.</p>
+        </div>
+        <a href="#room-form-panel" class="btn-navy shadow-xl">
+            <i class="fa-solid fa-plus mr-2"></i> Thêm phòng mới
+        </a>
+    </header>
+
+    <!-- Room List Table -->
+    <div class="overflow-x-auto" data-reveal>
+        <table class="w-full text-left border-separate border-spacing-y-3">
+            <thead>
+                <tr class="text-xs font-bold uppercase tracking-widest text-slate-400">
+                    <th class="px-6 py-2">Thông tin phòng</th>
+                    <th class="px-6 py-2">Phân loại</th>
+                    <th class="px-6 py-2 text-center">Giá niêm yết</th>
+                    <th class="px-6 py-2 text-center">Trạng thái</th>
+                    <th class="px-6 py-2 text-right">Quản lý</th>
+                </tr>
+            </thead>
+            <tbody th:if="${not #lists.isEmpty(rooms)}">
+                <tr th:each="roomItem : ${rooms}" class="group premium-card !p-0 bg-white hover:bg-slate-50 transition-colors">
+                    <td class="px-6 py-4 rounded-l-3xl">
+                        <div class="flex items-center gap-4">
+                            <div class="relative h-14 w-14 overflow-hidden rounded-2xl shadow-sm border border-slate-100 bg-slate-50">
+                                <img th:src="${roomItem.primaryImageUrl}" alt="Room" class="h-full w-full object-cover transition-transform group-hover:scale-110" />
+                            </div>
+                            <div>
+                                <p class="text-sm font-extrabold text-slate-900" th:text="${'Phòng ' + roomItem.roomNumber}">101</p>
+                                <p class="mt-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider" th:text="${roomItem.capacity + ' Khách'}">2 Khách</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="inline-block px-3 py-1 rounded-lg bg-slate-50 text-[10px] font-extrabold text-slate-500 uppercase tracking-widest border border-slate-100" th:text="${roomItem.type}">DELUXE</span>
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <p class="text-sm font-extrabold text-navy-950" th:text="${#numbers.formatDecimal(roomItem.priceInVnd, 0, 'COMMA', 0, 'POINT')} + ' ₫'">0 ₫</p>
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <div th:if="${roomItem.status == 'Đang sử dụng'}" class="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-[10px] font-bold text-blue-600 uppercase tracking-widest">
+                            <span class="h-1.5 w-1.5 rounded-full bg-blue-600"></span>
+                            In-house
+                        </div>
+                        <div th:if="${roomItem.status != 'Đang sử dụng'}">
+                            <form th:action="@{/quan-tri/phong/trang-thai}" method="post">
+                                <input type="hidden" name="roomId" th:value="${roomItem.id}" />
+                                <select name="status" onchange="this.form.submit()" 
+                                        class="rounded-full border-0 bg-slate-50 px-4 py-1.5 text-[10px] font-extrabold uppercase tracking-widest focus:ring-2 focus:ring-gold-500/20 transition-all cursor-pointer"
+                                        th:classappend="${roomItem.status == 'Trống' ? 'text-emerald-600' : (roomItem.status == 'Bảo trì' ? 'text-amber-600' : 'text-red-600')}">
+                                    <option value="Trống" th:selected="${roomItem.status == 'Trống'}">Sẵn sàng</option>
+                                    <option value="Bảo trì" th:selected="${roomItem.status == 'Bảo trì'}">Bảo trì</option>
+                                    <option value="Ngừng khai thác" th:selected="${roomItem.status == 'Ngừng khai thác'}">Ngừng KT</option>
+                                </select>
+                            </form>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-right rounded-r-3xl">
+                        <div class="flex items-center justify-end gap-2">
+                            <a th:href="@{/quan-tri/phong(editId=${roomItem.id})}" class="h-9 w-9 grid place-items-center rounded-xl bg-slate-50 text-slate-400 hover:bg-navy-950 hover:text-white transition shadow-sm border border-slate-100">
+                                <i class="fa-solid fa-pen-to-square text-xs"></i>
+                            </a>
+                            <form th:action="@{/quan-tri/phong/xoa/{id}(id=${roomItem.id})}" method="post">
+                                <button type="submit" class="h-9 w-9 grid place-items-center rounded-xl bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition shadow-sm border border-red-100">
+                                    <i class="fa-solid fa-trash-can text-xs"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Form Section -->
+    <section id="room-form-panel" class="grid gap-8 lg:grid-cols-3 pt-12" data-reveal>
+        <div class="lg:col-span-2 premium-card">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900" th:text="${room.id != null ? 'Cập nhật phòng' : 'Thêm phòng mới'}">Thêm phòng mới</h2>
+                    <p class="text-xs text-slate-400 mt-1">Thông tin chi tiết giúp khách hàng dễ dàng đưa ra quyết định.</p>
+                </div>
+                <a th:if="${room.id != null}" th:href="@{/quan-tri/phong}" class="text-[10px] font-bold text-gold-500 hover:text-gold-600 uppercase tracking-widest"><i class="fa-solid fa-rotate-left mr-1"></i> Reset Form</a>
+            </div>
+
+            <form th:action="@{/quan-tri/phong/luu}" th:object="${room}" method="post" class="space-y-6">
+                <input type="hidden" th:field="*{id}" />
+                <div class="grid gap-6 md:grid-cols-2">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-extrabold uppercase tracking-[0.15em] text-slate-400">Số phòng</label>
+                        <input type="text" th:field="*{roomNumber}" placeholder="VD: 305" class="modern-input" required />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-extrabold uppercase tracking-[0.15em] text-slate-400">Loại phòng</label>
+                        <select th:field="*{type}" class="modern-input">
+                            <option value="Đơn">Đơn</option>
+                            <option value="Đôi">Đôi</option>
+                            <option value="Hạng sang">Hạng sang</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-extrabold uppercase tracking-[0.15em] text-slate-400">Giá niêm yết ($)</label>
+                        <input type="number" step="0.01" th:field="*{price}" class="modern-input" required />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-extrabold uppercase tracking-[0.15em] text-slate-400">Sức chứa khách</label>
+                        <input type="number" th:field="*{capacity}" class="modern-input" required />
+                    </div>
+                    <div class="space-y-2 md:col-span-2">
+                        <label class="text-[10px] font-extrabold uppercase tracking-[0.15em] text-slate-400">URL ảnh (Unsplash / Online)</label>
+                        <input type="url" th:field="*{imageUrl}" class="modern-input" placeholder="https://images.unsplash.com/..." />
+                    </div>
+                    <div class="space-y-2 md:col-span-2">
+                        <label class="text-[10px] font-extrabold uppercase tracking-[0.15em] text-slate-400">Mô tả ngắn gọn</label>
+                        <textarea th:field="*{description}" rows="3" class="modern-input !rounded-[24px]" placeholder="Giới thiệu về không gian..."></textarea>
+                    </div>
+                </div>
+                <div class="pt-4">
+                    <button type="submit" class="btn-navy !w-full justify-center !py-4 shadow-xl">
+                        <i class="fa-solid fa-floppy-disk mr-2"></i> Lưu dữ liệu phòng
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <aside class="space-y-6">
+            <div class="premium-card">
+                <h3 class="text-sm font-bold text-slate-900 mb-6 uppercase tracking-widest">Ảnh xem trước</h3>
+                <div class="aspect-video w-full overflow-hidden rounded-2xl bg-slate-50 border-2 border-dashed border-slate-200 grid place-items-center relative">
+                    <img th:src="${room.imageUrl}" th:if="${room.imageUrl != null and !#strings.isEmpty(room.imageUrl)}" class="h-full w-full object-cover" />
+                    <div th:unless="${room.imageUrl != null and !#strings.isEmpty(room.imageUrl)}" class="text-center p-6">
+                        <i class="fa-solid fa-image text-3xl text-slate-200 mb-2"></i>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Chưa có ảnh</p>
+                    </div>
+                </div>
+                <p class="mt-4 text-[10px] leading-relaxed text-slate-400 italic">Gợi ý: Sử dụng ảnh phong cảnh hoặc nội thất phòng để tăng tỷ lệ đặt phòng.</p>
+            </div>
+            
+            <div class="premium-card bg-navy-950 text-white relative overflow-hidden">
+                <div class="absolute -right-4 -bottom-4 h-24 w-24 bg-white/5 rounded-full blur-2xl"></div>
+                <h3 class="text-sm font-bold mb-4 uppercase tracking-widest">Mẹo vận hành</h3>
+                <p class="text-xs text-white/50 leading-relaxed">Khi chuyển phòng sang "Bảo trì", hệ thống sẽ tự động gỡ phòng khỏi danh sách tìm kiếm của khách hàng nhưng vẫn giữ lại các đơn đặt phòng cũ để đối soát.</p>
+            </div>
+        </aside>
+    </section>
+</section>
+</body>
+</html>

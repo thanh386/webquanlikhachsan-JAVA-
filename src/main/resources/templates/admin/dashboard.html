@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin-layout}"
+      th:with="pageTitle='Bảng điều khiển'">
+<body>
+<section layout:fragment="content" class="space-y-8">
+    <!-- Header Section -->
+    <header class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between" data-reveal>
+        <div>
+            <nav class="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-gold-500">
+                <span>Management</span>
+                <i class="fa-solid fa-chevron-right text-[8px] text-slate-300"></i>
+                <span class="text-slate-400">Dashboard</span>
+            </nav>
+            <h1 class="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 lg:text-4xl">Chào buổi sáng, Quản trị viên.</h1>
+            <p class="mt-3 text-slate-500">Hệ thống đang vận hành ổn định. Dưới đây là số liệu phân tích trong ngày.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <button class="btn-navy shadow-lg">
+                <i class="fa-solid fa-download mr-2"></i> Xuất báo cáo
+            </button>
+            <div class="grid h-12 w-12 place-items-center rounded-2xl bg-white text-slate-400 shadow-soft border border-slate-100">
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Metrics Grid -->
+    <section class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <article class="premium-card group relative overflow-hidden" data-reveal>
+            <div class="absolute -right-4 -top-4 grid h-24 w-24 place-items-center rounded-full bg-gold-500/5 text-4xl text-gold-500/20 transition-transform group-hover:scale-110">
+                <i class="fa-solid fa-coins"></i>
+            </div>
+            <p class="text-xs font-bold uppercase tracking-widest text-slate-400">Doanh thu thực tế</p>
+            <h2 class="mt-4 text-3xl font-extrabold text-navy-950" th:text="${#numbers.formatDecimal(totalRevenue, 0, 'COMMA', 0, 'POINT')} + ' ₫'">0 ₫</h2>
+            <div class="mt-6 flex items-center justify-between border-t border-slate-50 pt-4">
+                <span class="text-xs font-semibold text-slate-400">Dự kiến: <span th:text="${#numbers.formatDecimal(expectedRevenue, 0, 'COMMA', 0, 'POINT')} + ' ₫'">0</span></span>
+            </div>
+        </article>
+
+        <article class="premium-card group relative overflow-hidden" data-reveal>
+            <div class="absolute -right-4 -top-4 grid h-24 w-24 place-items-center rounded-full bg-blue-500/5 text-4xl text-blue-500/20 transition-transform group-hover:scale-110">
+                <i class="fa-solid fa-door-open"></i>
+            </div>
+            <p class="text-xs font-bold uppercase tracking-widest text-slate-400">Phòng đang thuê</p>
+            <h2 class="mt-4 text-3xl font-extrabold text-navy-950" th:text="${occupiedRooms}">0</h2>
+            <div class="mt-6 flex items-center gap-2">
+                <div class="h-1.5 flex-1 rounded-full bg-slate-100 overflow-hidden">
+                    <div class="h-full bg-blue-500 rounded-full" th:style="'width: ' + (${totalRooms > 0} ? (${occupiedRooms} * 100 / ${totalRooms}) : 0) + '%'"></div>
+                </div>
+                <span class="text-[10px] font-bold text-slate-400" th:text="${totalRooms > 0 ? (occupiedRooms * 100 / totalRooms) : 0} + '%'">0%</span>
+            </div>
+        </article>
+
+        <article class="premium-card group relative overflow-hidden" data-reveal>
+            <div class="absolute -right-4 -top-4 grid h-24 w-24 place-items-center rounded-full bg-amber-500/5 text-4xl text-amber-500/20 transition-transform group-hover:scale-110">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+            <p class="text-xs font-bold uppercase tracking-widest text-slate-400">Đơn chờ duyệt</p>
+            <h2 class="mt-4 text-3xl font-extrabold text-navy-950" th:text="${pendingBookings}">0</h2>
+            <p class="mt-6 inline-flex items-center gap-2 text-xs font-bold text-amber-600">
+                Cần xử lý ngay
+            </p>
+        </article>
+
+        <article class="premium-card group relative overflow-hidden" data-reveal>
+            <div class="absolute -right-4 -top-4 grid h-24 w-24 place-items-center rounded-full bg-purple-500/5 text-4xl text-purple-500/20 transition-transform group-hover:scale-110">
+                <i class="fa-solid fa-user-tag"></i>
+            </div>
+            <p class="text-xs font-bold uppercase tracking-widest text-slate-400">Khách hàng</p>
+            <h2 class="mt-4 text-3xl font-extrabold text-navy-950" th:text="${customerCount}">0</h2>
+            <div class="mt-6 flex -space-x-2 overflow-hidden">
+                <div class="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-[10px] font-bold text-slate-500 ring-2 ring-white">+12</div>
+            </div>
+        </article>
+    </section>
+
+    <!-- Main Content Grid -->
+    <div class="grid gap-8 xl:grid-cols-3">
+        <!-- Recent Bookings -->
+        <section class="premium-card xl:col-span-2" data-reveal>
+            <div class="flex items-center justify-between gap-4">
+                <h3 class="text-2xl font-bold text-slate-900">Lượt đặt phòng mới nhất</h3>
+                <a th:href="@{/quan-tri/luot-dat}" class="text-sm font-bold text-gold-500 hover:text-gold-600 transition">Xem tất cả <i class="fa-solid fa-arrow-right ml-1"></i></a>
+            </div>
+            
+            <div class="mt-8 overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-xs font-bold uppercase tracking-widest text-slate-400 border-b border-slate-50">
+                            <th class="pb-4 pr-4">Khách hàng</th>
+                            <th class="pb-4 pr-4">Phòng</th>
+                            <th class="pb-4 pr-4">Trạng thái</th>
+                            <th class="pb-4 text-right">Tổng tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-50">
+                        <tr th:each="booking : ${recentBookings}" class="group hover:bg-slate-50/50 transition-colors">
+                            <td class="py-4 pr-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="grid h-9 w-9 place-items-center rounded-xl bg-navy-950 text-xs font-bold text-white" th:text="${#strings.substring(booking.guestName != null ? booking.guestName : 'K', 0, 1)}">K</div>
+                                    <div>
+                                        <p class="text-sm font-bold text-slate-900" th:text="${booking.guestName}">Tên khách</p>
+                                        <p class="text-[11px] text-slate-400" th:text="${booking.bookingCode}">BK-0001</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-4 pr-4">
+                                <p class="text-sm font-semibold text-slate-700" th:text="${'Phòng ' + booking.room.roomNumber}">P.101</p>
+                                <p class="text-[11px] text-slate-400" th:text="${booking.room.type}">Deluxe</p>
+                            </td>
+                            <td class="py-4 pr-4">
+                                <span th:switch="${booking.status}">
+                                    <span th:case="'Chờ xác nhận'" class="badge badge-pending">Pending</span>
+                                    <span th:case="'Đã xác nhận'" class="badge badge-info">Confirmed</span>
+                                    <span th:case="'Đã check-in'" class="badge badge-success">In-house</span>
+                                    <span th:case="'Đã check-out'" class="badge badge-info">Checked-out</span>
+                                    <span th:case="'Đã hủy'" class="badge badge-danger">Cancelled</span>
+                                    <span th:case="*" class="badge badge-info" th:text="${booking.status}">Other</span>
+                                </span>
+                            </td>
+                            <td class="py-4 text-right">
+                                <p class="text-sm font-extrabold text-navy-950" th:text="${#numbers.formatDecimal(booking.totalPrice, 0, 'COMMA', 0, 'POINT')} + ' ₫'">0 ₫</p>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(recentBookings)}">
+                            <td colspan="4" class="py-12 text-center text-slate-400">Không có dữ liệu mới.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Room Status Summary -->
+        <section class="premium-card h-full" data-reveal>
+            <h3 class="text-2xl font-bold text-slate-900">Trạng thái phòng</h3>
+            <p class="mt-2 text-sm text-slate-500">Phân bổ tình trạng phòng hiện tại.</p>
+            
+            <div class="mt-8 space-y-6">
+                <div th:each="status : ${roomStatuses}" th:with="count=${statusCounts.get(status)}" class="space-y-2">
+                    <div class="flex items-center justify-between text-xs font-bold uppercase tracking-wider">
+                        <span th:text="${status}" class="text-slate-500">Sẵn sàng</span>
+                        <span th:text="${count} + ' phòng'" class="text-navy-950">0 phòng</span>
+                    </div>
+                    <div class="h-2 rounded-full bg-slate-100 overflow-hidden">
+                        <div class="h-full rounded-full transition-all duration-1000" 
+                             th:style="'width: ' + (${totalRooms > 0} ? (${count} * 100 / ${totalRooms}) : 0) + '%'"
+                             th:classappend="${status == 'Trống' ? 'bg-emerald-500' : (status == 'Đang sử dụng' ? 'bg-blue-500' : (status == 'Bảo trì' ? 'bg-amber-500' : 'bg-red-500'))}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10 rounded-[24px] bg-navy-950 p-6 text-white relative overflow-hidden">
+                <i class="fa-solid fa-lightbulb absolute -right-4 -bottom-4 text-6xl text-white/5"></i>
+                <h4 class="font-bold">Mẹo quản trị</h4>
+                <p class="mt-2 text-xs leading-relaxed text-white/60">
+                    Sắp xếp bảo trì định kỳ vào đầu tuần để tối ưu doanh thu cuối tuần cao điểm.
+                </p>
+            </div>
+        </section>
+    </div>
+</section>
+</body>
+</html>

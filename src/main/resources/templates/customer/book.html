@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/site :: head('Đặt phòng')}"></head>
+<body class="app-body">
+<div class="app-shell">
+    <aside th:replace="~{fragments/site :: customerSidebar('phong')}"></aside>
+
+    <main class="app-main">
+        <section class="hero-panel" data-reveal>
+            <div>
+                <h1 class="hero-panel__title">Xác nhận thông tin đặt phòng</h1>
+                <p class="hero-panel__copy">
+                    Chọn ngày nhận và ngày trả phòng. Hệ thống sẽ kiểm tra lại tình trạng phòng trước khi lưu.
+                </p>
+            </div>
+            <div class="hero-panel__actions">
+                <a class="button button--secondary" th:href="@{/khach-hang/phong}">Quay lại danh sách phòng</a>
+            </div>
+        </section>
+
+        <div th:replace="~{fragments/site :: flash(${success}, ${error})}"></div>
+
+        <section class="content-grid content-grid--booking">
+            <article class="booking-summary" data-reveal>
+                <h2 class="booking-summary__title" th:text="|Phòng ${room.roomNumber}|">Phòng 101</h2>
+                <div class="detail-pair">
+                    <span>Loại phòng</span>
+                    <span class="detail-pair__value" th:text="${room.type}">Đơn</span>
+                </div>
+                <div class="detail-pair">
+                    <span>Giá mỗi đêm</span>
+                    <span class="detail-pair__value" th:text="${#numbers.formatDecimal(room.price, 1, 2) + ' đ'}">45.00 đ</span>
+                </div>
+                <div class="detail-pair">
+                    <span>Tình trạng hiện tại</span>
+                    <span class="detail-pair__value" th:text="${room.status}">Trống</span>
+                </div>
+
+                <ul class="booking-summary__list">
+                    <li class="booking-summary__item">Ngày trả phòng phải sau ngày nhận phòng ít nhất một ngày.</li>
+                    <li class="booking-summary__item">Sau khi xác nhận, phòng sẽ chuyển sang trạng thái đang sử dụng.</li>
+                    <li class="booking-summary__item">Bạn có thể hủy lượt đặt còn hiệu lực trong bảng điều khiển khách hàng.</li>
+                </ul>
+            </article>
+
+            <article class="panel" data-reveal>
+                <div class="panel__header">
+                    <div>
+                        <h2 class="section-title">Nhập thời gian lưu trú</h2>
+                        <p class="section-copy">Kiểm tra kỹ ngày để hệ thống lưu đúng lịch lưu trú của bạn.</p>
+                    </div>
+                </div>
+
+                <form class="auth-form" th:action="@{/khach-hang/dat-phong}" method="post" data-booking-form>
+                    <input type="hidden" name="roomId" th:value="${room.id}" />
+
+                    <div class="field">
+                        <label class="field__label" for="checkInDate">Ngày nhận phòng</label>
+                        <input id="checkInDate" type="date" name="checkInDate" th:attr="min=${today}" required />
+                    </div>
+
+                    <div class="field">
+                        <label class="field__label" for="checkOutDate">Ngày trả phòng</label>
+                        <input id="checkOutDate" type="date" name="checkOutDate" th:attr="min=${today}" required />
+                        <span class="field__hint">Ngày trả phòng sẽ được tự động đẩy tối thiểu sang ngày kế tiếp.</span>
+                    </div>
+
+                    <div class="button-row">
+                        <button class="button button--primary" type="submit">Xác nhận đặt phòng</button>
+                        <a class="button button--ghost" th:href="@{/khach-hang/phong}">Hủy</a>
+                    </div>
+                </form>
+            </article>
+        </section>
+    </main>
+</div>
+</body>
+</html>

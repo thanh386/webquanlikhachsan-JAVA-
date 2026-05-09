@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<body>
+<aside th:fragment="sidebar(activePage)" class="admin-sidebar relative w-full overflow-hidden border-b border-white/10 bg-navy-950 px-4 py-6 text-white lg:fixed lg:inset-y-0 lg:left-0 lg:w-72 lg:border-b-0 lg:border-r lg:px-6">
+    <div class="flex items-center gap-3">
+        <span class="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-gold-400 to-gold-500 text-lg font-extrabold text-navy-950 shadow-lg">AC</span>
+        <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.24em] text-white/60">Admin Portal</p>
+            <h2 class="text-xl font-bold">Azure Coast Hotel</h2>
+        </div>
+    </div>
+
+    <nav class="mt-8 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+        <a th:href="@{/quan-tri/bang-dieu-khien}" class="admin-nav-item" th:classappend="${activePage == 'dashboard'} ? ' is-active'">
+            <span class="grid h-11 w-11 place-items-center rounded-2xl bg-white/5 text-white/80"><i class="fa-solid fa-chart-line"></i></span>
+            <span>
+                <span class="block text-sm font-semibold">Tổng quan</span>
+                <span class="block text-xs text-white/60">Doanh thu và vận hành</span>
+            </span>
+        </a>
+        <a th:href="@{/quan-tri/phong}" class="admin-nav-item" th:classappend="${activePage == 'rooms'} ? ' is-active'">
+            <span class="grid h-11 w-11 place-items-center rounded-2xl bg-white/5 text-white/80"><i class="fa-solid fa-bed"></i></span>
+            <span>
+                <span class="block text-sm font-semibold">Quản lý phòng</span>
+                <span class="block text-xs text-white/60">Trạng thái và cấu hình</span>
+            </span>
+        </a>
+        <a th:href="@{/quan-tri/luot-dat}" class="admin-nav-item" th:classappend="${activePage == 'bookings'} ? ' is-active'">
+            <span class="grid h-11 w-11 place-items-center rounded-2xl bg-white/5 text-white/80"><i class="fa-solid fa-calendar-check"></i></span>
+            <span class="flex-1">
+                <span class="flex items-center justify-between">
+                    <span class="block text-sm font-semibold">Quản lý đơn</span>
+                    <span th:if="${sidebarPendingCount != null and sidebarPendingCount > 0}" 
+                          class="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-gold-500 px-1.5 text-[10px] font-bold text-navy-950"
+                          th:text="${sidebarPendingCount}">3</span>
+                </span>
+                <span class="block text-xs text-white/60">Duyệt và hủy đặt phòng</span>
+            </span>
+        </a>
+        <a th:href="@{/quan-tri/nhan-vien}" class="admin-nav-item" th:classappend="${activePage == 'staff'} ? ' is-active'">
+            <span class="grid h-11 w-11 place-items-center rounded-2xl bg-white/5 text-white/80"><i class="fa-solid fa-user-shield"></i></span>
+            <span>
+                <span class="block text-sm font-semibold">Nhân viên</span>
+                <span class="block text-xs text-white/60">Quản trị nội bộ</span>
+            </span>
+        </a>
+    </nav>
+
+    <div class="mt-8 rounded-[28px] border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
+        <p class="text-sm font-semibold text-white/80">Đăng nhập với vai trò</p>
+        <p class="mt-2 text-xl font-bold" sec:authentication="name">quantri</p>
+        <p class="mt-2 text-sm leading-6 text-white/60">Theo dõi hoạt động khách sạn, phản hồi nhanh với đơn mới và điều phối tình trạng phòng tập trung.</p>
+    </div>
+
+    <div class="mt-6 flex flex-wrap gap-3 lg:mt-auto">
+        <a th:href="@{/}" class="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-white/75 transition duration-300 hover:bg-white/10">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            Xem site
+        </a>
+        <form th:action="@{/dang-xuat}" method="post">
+            <button type="submit" class="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-white/75 transition duration-300 hover:bg-white/10">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Đăng xuất
+            </button>
+        </form>
+    </div>
+</aside>
+</body>
+</html>

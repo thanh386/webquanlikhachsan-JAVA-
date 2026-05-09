@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="appHead(title)">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${title}">Azure Coast Resort</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,aspect-ratio"></script>
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        if (typeof tailwind !== 'undefined') {
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            navy: {
+                                700: '#1a243d',
+                                800: '#12192b',
+                                900: '#0a0f1d',
+                                950: '#070a14',
+                            },
+                            gold: {
+                                400: '#d4b67a',
+                                500: '#c5a059',
+                                600: '#b08d4a',
+                            }
+                        },
+                        fontFamily: {
+                            sans: ['Inter', 'sans-serif'],
+                            serif: ['Playfair Display', 'serif'],
+                            display: ['Plus Jakarta Sans', 'sans-serif'],
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <style>
+        /* Đảm bảo nội dung luôn hiển thị ngay cả khi JS lỗi */
+        [data-reveal] {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+        
+        .badge {
+            @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider;
+        }
+        .badge-pending { @apply bg-amber-50 text-amber-600 border border-amber-100; }
+        .badge-success { @apply bg-emerald-50 text-emerald-600 border border-emerald-100; }
+        .badge-info { @apply bg-blue-50 text-blue-600 border border-blue-100; }
+        .badge-danger { @apply bg-red-50 text-red-600 border border-red-100; }
+    </style>
+</head>
+</html>

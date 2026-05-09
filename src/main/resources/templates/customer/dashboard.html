@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/site :: head('Lượt lưu trú của tôi')}"></head>
+<body class="app-body">
+<div class="app-shell">
+    <aside th:replace="~{fragments/site :: customerSidebar('luu-tru')}"></aside>
+
+    <main class="app-main">
+        <section class="hero-panel" data-reveal>
+            <div>
+                <h1 class="hero-panel__title">Theo dõi toàn bộ lượt lưu trú của bạn</h1>
+                <p class="hero-panel__copy">
+                    Xem phòng đã đặt, lịch nhận trả phòng và hủy lượt đặt còn hiệu lực ngay trong một màn hình.
+                </p>
+            </div>
+            <div class="hero-panel__actions">
+                <a class="button button--secondary" th:href="@{/khach-hang/phong}">Xem phòng trống</a>
+                <form th:action="@{/dang-xuat}" method="post">
+                    <button class="button button--ghost" type="submit">Đăng xuất</button>
+                </form>
+            </div>
+        </section>
+
+        <div th:replace="~{fragments/site :: flash(${success}, ${error})}"></div>
+
+        <section class="metric-grid">
+            <article class="metric-card metric-card--ink" data-reveal>
+                <span class="metric-card__label">Tổng lượt đặt</span>
+                <strong class="metric-card__value" th:text="${#lists.size(bookings)}">0</strong>
+                <p class="metric-card__hint">Toàn bộ lượt đặt của riêng bạn.</p>
+            </article>
+            <article class="metric-card metric-card--teal" data-reveal>
+                <span class="metric-card__label">Đã xác nhận</span>
+                <strong class="metric-card__value" th:text="${#lists.size(bookings.?[status == 'Đã xác nhận'])}">0</strong>
+                <p class="metric-card__hint">Những lượt đặt đang còn hiệu lực.</p>
+            </article>
+            <article class="metric-card metric-card--gold" data-reveal>
+                <span class="metric-card__label">Đã hủy</span>
+                <strong class="metric-card__value" th:text="${#lists.size(bookings.?[status == 'Đã hủy'])}">0</strong>
+                <p class="metric-card__hint">Các lượt đặt bạn đã hủy trước đó.</p>
+            </article>
+            <article class="metric-card metric-card--mint" data-reveal>
+                <span class="metric-card__label">Lượt đang giữ chỗ</span>
+                <strong class="metric-card__value" th:text="${#lists.size(bookings.?[status == 'Đã xác nhận'])}">0</strong>
+                <p class="metric-card__hint">Số lượt đặt còn ảnh hưởng tới lịch lưu trú của bạn.</p>
+            </article>
+        </section>
+
+        <article class="panel" data-reveal>
+            <div class="panel__header">
+                <div>
+                    <h2 class="section-title">Danh sách lưu trú</h2>
+                    <p class="section-copy">Kiểm tra lại phòng, ngày lưu trú và trạng thái từng lượt đặt.</p>
+                </div>
+                <div class="section-header-actions">
+                    <a class="button button--ghost button--small" th:href="@{/khach-hang/phong}">Tìm phòng khác</a>
+                </div>
+            </div>
+
+            <div class="data-table-wrap" th:if="${not #lists.isEmpty(bookings)}">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>Phòng</th>
+                        <th>Loại</th>
+                        <th>Nhận phòng</th>
+                        <th>Trả phòng</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="booking : ${bookings}">
+                        <td><span class="table-title" th:text="|Phòng ${booking.room.roomNumber}|">Phòng 101</span></td>
+                        <td><span class="table-title" th:text="${booking.room.type}">Đơn</span></td>
+                        <td><span class="table-title" th:text="${booking.checkInDate}">2026-05-03</span></td>
+                        <td><span class="table-title" th:text="${booking.checkOutDate}">2026-05-04</span></td>
+                        <td>
+                            <span class="status-badge"
+                                  th:classappend="${booking.status == 'Đã xác nhận'} ? ' status-badge--confirmed' : ' status-badge--cancelled'"
+                                  th:text="${booking.status}">Đã xác nhận</span>
+                        </td>
+                        <td>
+                            <div class="table-actions" th:if="${booking.status == 'Đã xác nhận'}">
+                                <form class="inline-form" th:action="@{'/khach-hang/luot-dat/' + ${booking.id} + '/huy'}" method="post">
+                                    <button class="button button--ghost button--small" type="submit" data-confirm="Bạn có chắc chắn muốn hủy lượt đặt này không?">Hủy lượt đặt</button>
+                                </form>
+                            </div>
+                            <span class="table-meta" th:if="${booking.status != 'Đã xác nhận'}">Không cần thao tác</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="empty-state" th:if="${#lists.isEmpty(bookings)}">
+                <h3 class="empty-state__title">Bạn chưa có lượt đặt nào</h3>
+                <p class="empty-state__text">Chọn một phòng còn trống để bắt đầu kế hoạch lưu trú.</p>
+                <a class="button button--primary" th:href="@{/khach-hang/phong}">Xem phòng còn trống</a>
+            </div>
+        </article>
+    </main>
+</div>
+</body>
+</html>

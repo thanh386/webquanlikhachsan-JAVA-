@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<body>
+<div th:fragment="topbar" class="sticky top-0 z-30 border-b border-slate-200/80 bg-slate-50/90 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-7xl items-center gap-4 px-4 py-4 sm:px-6 lg:px-10">
+        <div class="relative flex-1">
+            <i class="fa-solid fa-magnifying-glass pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+            <input type="search" placeholder="Tìm phòng, đơn đặt hoặc khách hàng..." class="w-full rounded-full border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm text-slate-700 shadow-sm transition duration-300 focus:border-navy-700 focus:ring-0" />
+        </div>
+        <button type="button" class="grid h-12 w-12 place-items-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:text-navy-900">
+            <i class="fa-regular fa-bell"></i>
+        </button>
+        <div class="flex items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-2 shadow-sm">
+            <span class="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-navy-900 to-navy-700 text-sm font-bold text-white">AC</span>
+            <div class="hidden sm:block">
+                <p class="text-sm font-semibold text-slate-900" sec:authentication="name">quantri</p>
+                <p class="text-xs text-slate-400">Administrator</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

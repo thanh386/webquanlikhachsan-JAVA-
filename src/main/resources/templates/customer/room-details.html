@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/customer-layout}"
+      th:with="pageTitle=${'Chi tiết phòng ' + room.roomNumber}">
+<body>
+<section layout:fragment="content" class="pb-20 pt-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between" data-reveal>
+            <div class="max-w-3xl">
+                <p class="text-sm font-semibold uppercase tracking-[0.24em] text-gold-500">Room Details</p>
+                <h1 class="mt-3 text-4xl font-bold text-slate-900 sm:text-5xl" th:text="${'Phòng ' + room.type + ' ' + room.roomNumber}">Phòng Hạng sang 201</h1>
+                <p class="mt-4 text-base leading-8 text-slate-500" th:text="${room.resolvedDescription}">
+                    Bố cục nghỉ dưỡng cân bằng giữa sự riêng tư, chất liệu ấm và tiện ích thực dụng, lý tưởng cho kỳ lưu trú ngắn ngày hoặc chuyến nghỉ dưỡng được lên kế hoạch kỹ.
+                </p>
+            </div>
+            <div class="flex flex-wrap gap-3">
+                <span th:if="${room.status == 'Trống'}" class="rounded-full bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-600">
+                    <i class="fa-solid fa-circle-check mr-2"></i>
+                    Sẵn sàng đặt
+                </span>
+                <span th:if="${room.status != 'Trống'}" class="rounded-full bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-600">
+                    <i class="fa-solid fa-hourglass-half mr-2"></i>
+                    Cần xác nhận thủ công
+                </span>
+                <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-600" th:text="${room.effectiveCapacity} + ' khách tối đa'">4 khách tối đa</span>
+            </div>
+        </div>
+
+        <section class="bento-gallery mb-10" data-reveal>
+            <div class="bento-gallery__main">
+                <img th:src="${galleryImages[0]}" src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1400&q=80" alt="Ảnh chính" class="h-full w-full object-cover" />
+            </div>
+            <div class="grid gap-4 sm:grid-cols-2">
+                <div class="bento-gallery__tile"><img th:src="${galleryImages[1]}" src="https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?auto=format&fit=crop&w=900&q=80" alt="Ảnh phụ 1" class="h-full w-full object-cover" /></div>
+                <div class="bento-gallery__tile"><img th:src="${galleryImages[2]}" src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=900&q=80" alt="Ảnh phụ 2" class="h-full w-full object-cover" /></div>
+                <div class="bento-gallery__tile sm:col-span-2"><img th:src="${galleryImages[3]}" src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Ảnh phụ 3" class="h-full w-full object-cover" /></div>
+            </div>
+        </section>
+
+        <div class="grid gap-8 xl:grid-cols-[minmax(0,1fr)_380px]">
+            <div class="space-y-8">
+                <div class="soft-card rounded-[32px] bg-white p-8 shadow-soft" data-reveal>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="rounded-full bg-gold-300/40 px-4 py-2 text-sm font-semibold text-navy-900">Đặt nhanh trong 2 phút</span>
+                        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-600" th:text="${room.type}">Hạng sang</span>
+                        <span class="rounded-full bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-600">Miễn phí hủy trước khi xác nhận</span>
+                    </div>
+
+                    <h2 class="mt-6 text-3xl font-bold text-slate-900">Không gian lưu trú được tinh chỉnh để thư giãn và làm việc nhẹ.</h2>
+                    <p class="mt-4 text-base leading-8 text-slate-500" th:text="${room.resolvedDescription}">
+                        Hạng suite với khu tiếp khách riêng, điểm nhấn vật liệu gỗ tối và các tiện nghi nâng cấp cho kỳ nghỉ riêng tư, chỉn chu.
+                    </p>
+
+                    <div class="mt-8 grid gap-4 sm:grid-cols-3">
+                        <div class="rounded-[26px] bg-slate-50 p-5">
+                            <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">Giá theo đêm</p>
+                            <p class="mt-3 text-3xl font-bold text-slate-900" th:text="${#numbers.formatDecimal(room.priceInVnd, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">4,500,000 VNĐ</p>
+                        </div>
+                        <div class="rounded-[26px] bg-slate-50 p-5">
+                            <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">Loại lưu trú</p>
+                            <p class="mt-3 text-3xl font-bold text-slate-900" th:text="${room.type}">Hạng sang</p>
+                        </div>
+                        <div class="rounded-[26px] bg-slate-50 p-5">
+                            <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">Sức chứa</p>
+                            <p class="mt-3 text-3xl font-bold text-slate-900" th:text="${room.effectiveCapacity} + ' khách'">4 khách</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="soft-card rounded-[32px] bg-white p-8 shadow-soft" data-reveal>
+                    <div class="flex items-center justify-between gap-4">
+                        <div>
+                            <p class="text-sm font-semibold uppercase tracking-[0.24em] text-gold-500">Amenities</p>
+                            <h3 class="mt-3 text-3xl font-bold text-slate-900">Tiện ích nổi bật</h3>
+                        </div>
+                    </div>
+                    <div class="mt-8 grid gap-4 sm:grid-cols-2">
+                        <div th:each="amenity : ${room.amenityList}" class="flex items-start gap-4 rounded-[24px] border border-slate-100 bg-slate-50 p-4 transition duration-300 hover:-translate-y-0.5 hover:scale-[1.01] hover:shadow-sm">
+                            <span class="grid h-11 w-11 place-items-center rounded-2xl bg-white text-gold-500 shadow-sm">
+                                <i class="fa-solid fa-star"></i>
+                            </span>
+                            <div>
+                                <p class="text-sm font-semibold text-slate-900" th:text="${amenity}">Ban công riêng hướng thành phố</p>
+                                <p class="mt-1 text-sm leading-6 text-slate-500">Thiết kế hướng tới sự thoải mái lâu dài, đồng bộ với phong cách nghỉ dưỡng hiện đại.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="sticky top-28 self-start">
+                <div class="glass-panel rounded-[32px] p-6 shadow-floating" data-booking-card th:attr="data-price=${room.priceInVnd}" data-reveal>
+                    <div class="rounded-[26px] bg-navy-950 p-5 text-white">
+                        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-white/50">Booking Card</p>
+                        <h3 class="mt-3 text-2xl font-bold">Xác nhận kỳ lưu trú của bạn</h3>
+                        <p class="mt-3 text-sm leading-7 text-white/70">Chọn ngày, số khách và hệ thống sẽ tự tính số đêm cùng tổng thanh toán trước khi bạn gửi yêu cầu đặt phòng.</p>
+                    </div>
+
+                    <form th:action="@{/khach-hang/dat-phong}" method="post" class="mt-6 space-y-5" data-booking-form>
+                        <input type="hidden" name="roomId" th:value="${room.id}" />
+
+                        <label class="block space-y-2">
+                            <span class="text-sm font-semibold text-slate-500">Ngày nhận phòng</span>
+                            <input type="date" name="checkInDate"
+                                   th:min="${today}"
+                                   th:value="${defaultCheckIn}"
+                                   class="luxury-input w-full rounded-[22px] border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-900 focus:border-navy-700 focus:ring-0" />
+                        </label>
+
+                        <label class="block space-y-2">
+                            <span class="text-sm font-semibold text-slate-500">Ngày trả phòng</span>
+                            <input type="date" name="checkOutDate"
+                                   th:min="${tomorrow}"
+                                   th:value="${defaultCheckOut}"
+                                   class="luxury-input w-full rounded-[22px] border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-900 focus:border-navy-700 focus:ring-0" />
+                        </label>
+
+                        <label class="block space-y-2">
+                            <span class="text-sm font-semibold text-slate-500">Số khách lưu trú</span>
+                            <select name="guestCount" class="luxury-input w-full rounded-[22px] border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-900 focus:border-navy-700 focus:ring-0">
+                                <option th:each="guestOption : ${#numbers.sequence(1, room.effectiveCapacity)}"
+                                        th:value="${guestOption}"
+                                        th:text="${guestOption} + ' khách'"
+                                        th:selected="${guestOption == 1}">1 khách</option>
+                            </select>
+                        </label>
+
+                        <!-- Thông tin khách lưu trú (tương tự checkin form thực tế) -->
+                        <label class="block space-y-2">
+                            <span class="text-sm font-semibold text-slate-500">Tên khách chính lưu trú</span>
+                            <input type="text" name="guestName" placeholder="Họ và tên khách"
+                                   class="luxury-input w-full rounded-[22px] border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-900 focus:border-navy-700 focus:ring-0" />
+                        </label>
+
+                        <label class="block space-y-2">
+                            <span class="text-sm font-semibold text-slate-500">Số điện thoại liên lạc</span>
+                            <input type="tel" name="guestPhone" placeholder="09xx xxx xxx"
+                                   class="luxury-input w-full rounded-[22px] border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-900 focus:border-navy-700 focus:ring-0" />
+                        </label>
+
+                        <label class="block space-y-2">
+                            <span class="text-sm font-semibold text-slate-500">Yêu cầu đặc biệt (tùy chọn)</span>
+                            <textarea name="specialRequests" rows="2" placeholder="Phòng không hút thuốc, tầng cao, giường thêm..."
+                                      class="luxury-input w-full rounded-[22px] border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:border-navy-700 focus:ring-0 resize-none"></textarea>
+                        </label>
+
+                        <div class="rounded-[26px] bg-slate-50 p-5">
+                            <div class="flex items-center justify-between py-2 text-sm text-slate-500">
+                                <span>Đơn giá / đêm</span>
+                                <strong class="text-slate-900" th:text="${#numbers.formatDecimal(room.priceInVnd, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">4,500,000 VNĐ</strong>
+                            </div>
+                            <div class="flex items-center justify-between py-2 text-sm text-slate-500">
+                                <span>Số đêm</span>
+                                <strong data-nights-display class="text-slate-900">1 đêm</strong>
+                            </div>
+                            <div class="mt-3 border-t border-slate-200 pt-4">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">Tổng thanh toán</span>
+                                    <strong data-total-display class="text-2xl font-bold text-navy-900">4,500,000 VNĐ</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" data-submit-loading class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-navy-900 via-navy-800 to-gold-500 px-6 py-4 text-sm font-semibold text-white shadow-lg transition duration-300 hover:-translate-y-0.5 hover:scale-[1.01]">
+                            <span data-submit-label>Xác nhận đặt phòng</span>
+                            <span data-loading-label class="hidden items-center gap-2">
+                                <i class="fa-solid fa-spinner animate-spin"></i>
+                                Đang gửi yêu cầu...
+                            </span>
+                        </button>
+                    </form>
+
+                    <div class="mt-6 space-y-4 rounded-[26px] border border-slate-200 bg-white p-5">
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-shield-heart mt-1 text-gold-500"></i>
+                            <p class="text-sm leading-7 text-slate-500">Thông tin lưu trú sẽ được đội ngũ xác nhận thủ công để đảm bảo trạng thái phòng và yêu cầu đặc biệt của bạn.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-bell-concierge mt-1 text-gold-500"></i>
+                            <p class="text-sm leading-7 text-slate-500">Bạn có thể theo dõi trạng thái đặt phòng, mã booking và tổng tiền snapshot tại trang lịch sử sau khi gửi biểu mẫu.</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+</body>
+</html>

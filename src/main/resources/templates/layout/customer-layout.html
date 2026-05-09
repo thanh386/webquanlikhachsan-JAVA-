@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/head :: appHead(${pageTitle} ?: 'Azure Coast Hotel')}"></head>
+<body class="bg-slate-50 font-sans text-slate-900 antialiased">
+<div id="toast-root" class="pointer-events-none fixed right-4 top-4 z-[80] flex w-[min(360px,calc(100vw-2rem))] flex-col gap-3"></div>
+<div th:if="${success}" class="hidden" data-toast-message th:attr="data-toast-message=${success},data-toast-type='success'"></div>
+<div th:if="${error}" class="hidden" data-toast-message th:attr="data-toast-message=${error},data-toast-type='error'"></div>
+
+<header th:replace="~{fragments/header :: siteHeader(${activePage})}"></header>
+<main layout:fragment="content"></main>
+<footer th:replace="~{fragments/footer :: siteFooter}"></footer>
+<div th:replace="~{fragments/modal :: confirmModal}"></div>
+<script defer th:src="@{/js/app.js}"></script>
+</body>
+</html>

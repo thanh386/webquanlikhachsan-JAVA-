@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/site :: head('Phòng đang trống')}"></head>
+<body class="app-body">
+<div class="app-shell">
+    <aside th:replace="~{fragments/site :: customerSidebar('phong')}"></aside>
+
+    <main class="app-main">
+        <section class="hero-panel" data-reveal>
+            <div>
+                <h1 class="hero-panel__title">Chọn trong các phòng đang trống lúc này</h1>
+                <p class="hero-panel__copy">
+                    Mỗi thẻ phòng hiển thị loại phòng, giá và tình trạng hiện tại để bạn chọn nhanh lượt lưu trú phù hợp.
+                </p>
+            </div>
+            <div class="hero-panel__actions">
+                <a class="button button--secondary" th:href="@{/khach-hang/bang-dieu-khien}">Quay lại bảng điều khiển</a>
+            </div>
+        </section>
+
+        <section class="metric-grid">
+            <article class="metric-card metric-card--mint" data-reveal>
+                <span class="metric-card__label">Phòng đang trống</span>
+                <strong class="metric-card__value" th:text="${#lists.size(rooms)}">0</strong>
+                <p class="metric-card__hint">Những lựa chọn bạn có thể đặt ngay lúc này.</p>
+            </article>
+            <article class="metric-card metric-card--teal" data-reveal>
+                <span class="metric-card__label">Bước đặt phòng</span>
+                <strong class="metric-card__value">3</strong>
+                <p class="metric-card__hint">Chọn phòng, chọn ngày, xác nhận lượt đặt.</p>
+            </article>
+            <article class="metric-card metric-card--gold" data-reveal>
+                <span class="metric-card__label">Cập nhật trạng thái</span>
+                <strong class="metric-card__value">Tức thời</strong>
+                <p class="metric-card__hint">Danh sách hiển thị theo đúng tình trạng phòng hiện tại.</p>
+            </article>
+            <article class="metric-card metric-card--ink" data-reveal>
+                <span class="metric-card__label">Loại phòng</span>
+                <strong class="metric-card__value" th:text="${#lists.size(rooms)}">0</strong>
+                <p class="metric-card__hint">Mỗi thẻ hiển thị số phòng, loại phòng và giá trong một lần nhìn.</p>
+            </article>
+        </section>
+
+        <section class="room-grid" th:if="${not #lists.isEmpty(rooms)}">
+            <article class="room-card" th:each="room : ${rooms}" data-reveal>
+                <div class="room-card__header">
+                    <div>
+                        <h2 class="room-card__title" th:text="|Phòng ${room.roomNumber}|">Phòng 101</h2>
+                        <p class="room-card__meta" th:text="${room.type}">Đơn</p>
+                    </div>
+                    <span class="status-badge status-badge--available" th:text="${room.status}">Trống</span>
+                </div>
+
+                <div class="room-card__price">
+                    <strong th:text="${#numbers.formatDecimal(room.price, 1, 2) + ' đ'}">45.00 đ</strong>
+                    <span>/ đêm</span>
+                </div>
+
+                <div class="room-card__grid">
+                    <div class="room-card__tile">
+                        <strong>Loại phòng</strong>
+                        <span th:text="${room.type}">Đơn</span>
+                    </div>
+                    <div class="room-card__tile">
+                        <strong>Số phòng</strong>
+                        <span th:text="${room.roomNumber}">101</span>
+                    </div>
+                    <div class="room-card__tile">
+                        <strong>Tình trạng</strong>
+                        <span th:text="${room.status}">Trống</span>
+                    </div>
+                </div>
+
+                <div class="room-card__footer">
+                    <span class="table-meta">Bạn sẽ chọn ngày nhận và ngày trả phòng ở bước tiếp theo.</span>
+                    <a class="button button--primary" th:href="@{'/khach-hang/dat-phong/' + ${room.id}}">Đặt phòng này</a>
+                </div>
+            </article>
+        </section>
+
+        <div class="empty-state" th:if="${#lists.isEmpty(rooms)}">
+            <h3 class="empty-state__title">Hiện chưa có phòng trống</h3>
+            <p class="empty-state__text">Vui lòng quay lại sau hoặc liên hệ nhân viên khi trạng thái phòng thay đổi.</p>
+        </div>
+    </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<footer th:fragment="siteFooter" class="bg-navy-950 text-white pt-24 pb-12 border-t border-white/5 relative overflow-hidden">
+    <!-- Decor Gradient -->
+    <div class="absolute bottom-0 right-0 h-96 w-96 bg-gold-500/5 blur-[120px] rounded-full"></div>
+    
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid gap-16 lg:grid-cols-4 mb-20">
+            <div class="lg:col-span-2 space-y-8">
+                <div class="flex items-center gap-4">
+                    <div class="h-14 w-14 bg-gold-500 rounded-2xl grid place-items-center font-black text-navy-950 text-2xl shadow-lg shadow-gold-500/20">AC</div>
+                    <div>
+                        <h2 class="font-serif text-3xl font-bold leading-none mb-1">Azure Coast</h2>
+                        <p class="text-[10px] font-bold uppercase text-gold-500/80 tracking-[0.1em]">Luxury Boutique Resort</p>
+                    </div>
+                </div>
+                <p class="text-slate-400 max-w-md leading-relaxed">Kiến tạo những kỳ nghỉ di sản, nơi sự tinh tế của kiến trúc đương đại hòa quyện cùng lòng hiếu khách Việt Nam nồng hậu để tạo nên những trải nghiệm lưu trú vô giá.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="h-11 w-11 rounded-full bg-white/5 border border-white/10 grid place-items-center hover:bg-gold-500 hover:text-navy-950 transition-all duration-300 shadow-sm"><i class="fa-brands fa-facebook-f text-sm"></i></a>
+                    <a href="#" class="h-11 w-11 rounded-full bg-white/5 border border-white/10 grid place-items-center hover:bg-gold-500 hover:text-navy-950 transition-all duration-300 shadow-sm"><i class="fa-brands fa-instagram text-sm"></i></a>
+                    <a href="#" class="h-11 w-11 rounded-full bg-white/5 border border-white/10 grid place-items-center hover:bg-gold-500 hover:text-navy-950 transition-all duration-300 shadow-sm"><i class="fa-brands fa-x-twitter text-sm"></i></a>
+                </div>
+            </div>
+            
+            <div class="space-y-8">
+                <h4 class="font-bold text-white uppercase text-xs">Thông tin liên hệ</h4>
+                <ul class="space-y-5 text-sm text-slate-400">
+                    <li class="flex items-start gap-4">
+                        <i class="fa-solid fa-location-dot mt-1 text-gold-500"></i>
+                        <span>Đường ABC, Phường B, Quận C, Thành phố D, Việt Nam</span>
+                    </li>
+                    <li class="flex items-center gap-4">
+                        <i class="fa-solid fa-phone text-gold-500"></i>
+                        <span>0912345678</span>
+                    </li>
+                    <li class="flex items-center gap-4">
+                        <i class="fa-solid fa-envelope text-gold-500"></i>
+                        <span>demo@azurecoast.vn</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="space-y-8">
+                <h4 class="font-bold text-white uppercase text-xs">Bản tin đặc quyền</h4>
+                <p class="text-xs text-slate-500 leading-relaxed">Đăng ký để nhận thông tin sớm nhất về các chương trình ưu đãi và sự kiện độc quyền tại Azure Coast.</p>
+                <form class="flex gap-2">
+                    <input type="email" placeholder="Email của bạn" class="bg-white/5 border border-white/10 rounded-full px-5 py-3 text-xs flex-1 focus:outline-none focus:border-gold-500 transition-colors" />
+                    <button class="h-10 w-10 rounded-full bg-gold-500 text-navy-950 grid place-items-center hover:scale-105 active:scale-95 transition-transform"><i class="fa-solid fa-paper-plane text-xs"></i></button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-[10px] font-bold text-slate-500 uppercase">
+                &copy; 2026 Azure Coast Luxury Resort. All rights reserved.
+            </p>
+            <div class="flex gap-8 text-[10px] font-bold text-slate-500 uppercase">
+                <a href="#" class="hover:text-gold-500 transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-gold-500 transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
