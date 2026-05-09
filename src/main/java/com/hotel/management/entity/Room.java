@@ -1,5 +1,6 @@
 package com.hotel.management.entity;
 
+<<<<<<< HEAD
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,13 +10,19 @@ import jakarta.persistence.Table;
 
 import java.util.Arrays;
 import java.util.List;
+=======
+import jakarta.persistence.*;
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
 
 @Entity
 @Table(name = "rooms")
 public class Room {
 
+<<<<<<< HEAD
     private static final double PRICE_MULTIPLIER = 100000d;
 
+=======
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,12 +31,17 @@ public class Room {
     private String roomNumber;
 
     @Column(nullable = false)
+<<<<<<< HEAD
     private String type;
+=======
+    private String type; // e.g., Single, Double, Suite
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
 
     @Column(nullable = false)
     private double price;
 
     @Column(nullable = false)
+<<<<<<< HEAD
     private String status;
 
     private Integer capacity;
@@ -43,6 +55,11 @@ public class Room {
     @Column(length = 2000)
     private String amenities;
 
+=======
+    private String status; // Available, Occupied, Maintenance
+
+    // Constructors, getters, setters
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
     public Room() {}
 
     public Room(String roomNumber, String type, double price, String status) {
@@ -52,6 +69,7 @@ public class Room {
         this.status = status;
     }
 
+<<<<<<< HEAD
     public Room(String roomNumber,
                 String type,
                 double price,
@@ -224,3 +242,17 @@ public class Room {
         };
     }
 }
+=======
+    // Getters and setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getRoomNumber() { return roomNumber; }
+    public void setRoomNumber(String roomNumber) { this.roomNumber = roomNumber; }
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+}
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb

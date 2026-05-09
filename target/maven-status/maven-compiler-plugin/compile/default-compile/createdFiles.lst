@@ -1,0 +1,14 @@
+com\hotel\management\service\UserService.class
+com\hotel\management\controller\AuthController.class
+com\hotel\management\HotelManagementApplication.class
+com\hotel\management\controller\CustomerController.class
+com\hotel\management\config\SecurityConfig.class
+com\hotel\management\repository\RoomRepository.class
+com\hotel\management\service\RoomService.class
+com\hotel\management\entity\Room.class
+com\hotel\management\entity\Booking.class
+com\hotel\management\controller\AdminController.class
+com\hotel\management\repository\BookingRepository.class
+com\hotel\management\repository\UserRepository.class
+com\hotel\management\service\BookingService.class
+com\hotel\management\entity\User.class

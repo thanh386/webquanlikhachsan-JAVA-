@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Rooms</title>
+</head>
+<body>
+    <h2>Manage Rooms</h2>
+    <a th:href="@{/admin/dashboard}">Back to Dashboard</a>
+    
+    <h3>Add Room</h3>
+    <form th:action="@{/admin/rooms}" th:object="${room}" method="post">
+        <label>Room Number: <input type="text" th:field="*{roomNumber}" /></label><br/>
+        <label>Type: <input type="text" th:field="*{type}" /></label><br/>
+        <label>Price: <input type="number" th:field="*{price}" /></label><br/>
+        <label>Status: <input type="text" th:field="*{status}" /></label><br/>
+        <button type="submit">Save</button>
+    </form>
+    
+    <h3>Rooms</h3>
+    <ul th:each="room : ${rooms}">
+        <li th:text="${room.roomNumber} + ' - ' + ${room.type} + ' - ' + ${room.status}">
+            <a th:href="@{'/admin/rooms/delete/' + ${room.id}}">Delete</a>
+        </li>
+    </ul>
+</body>
+</html>

@@ -2,6 +2,7 @@ package com.hotel.management.repository;
 
 import com.hotel.management.entity.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
+<<<<<<< HEAD
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -94,3 +95,11 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     /** Booking đang check-in (khách đang lưu trú). */
     List<Booking> findByStatusOrderByCheckInDateAsc(String status);
 }
+=======
+import java.util.List;
+
+public interface BookingRepository extends JpaRepository<Booking, Long> {
+    List<Booking> findByUserId(Long userId);
+    List<Booking> findByStatus(String status);
+}
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb

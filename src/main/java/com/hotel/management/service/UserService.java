@@ -3,6 +3,7 @@ package com.hotel.management.service;
 import com.hotel.management.entity.User;
 import com.hotel.management.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,6 +24,14 @@ public class UserService implements UserDetailsService {
     public static final String STAFF_ROLE = "ROLE_NHAN_VIEN";
 
     private static final Set<String> ALLOWED_ROLES = Set.of(CUSTOMER_ROLE, STAFF_ROLE);
+=======
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
+
+@Service
+public class UserService {
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
 
     @Autowired
     private UserRepository userRepository;
@@ -30,6 +39,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+<<<<<<< HEAD
     @Transactional
     public User saveUser(User user) {
         if (user.getUsername() == null || user.getUsername().isBlank()) {
@@ -59,10 +69,14 @@ public class UserService implements UserDetailsService {
         }
 
         user.setRoles(normalizeRoles(user.getRoles()));
+=======
+    public User saveUser(User user) {
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
+<<<<<<< HEAD
     @Transactional
     public User registerCustomer(User user) {
         user.setRoles(Collections.singleton(CUSTOMER_ROLE));
@@ -191,3 +205,9 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 }
+=======
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+}
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb

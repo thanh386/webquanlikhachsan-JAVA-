@@ -1,6 +1,7 @@
 package com.hotel.management.service;
 
 import com.hotel.management.entity.Room;
+<<<<<<< HEAD
 import com.hotel.management.repository.BookingRepository;
 import com.hotel.management.repository.RoomRepository;
 import com.hotel.management.util.DebugRuntimeLogger;
@@ -27,17 +28,30 @@ public class RoomService {
     private static final Set<String> VALID_STATUSES = Set.of(
         AVAILABLE_STATUS, OCCUPIED_STATUS, MAINTENANCE_STATUS, INACTIVE_STATUS
     );
+=======
+import com.hotel.management.repository.RoomRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
+@Service
+public class RoomService {
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
 
     @Autowired
     private RoomRepository roomRepository;
 
+<<<<<<< HEAD
     @Autowired
     private BookingRepository bookingRepository;
 
+=======
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
     public List<Room> getAllRooms() {
         return roomRepository.findAll();
     }
 
+<<<<<<< HEAD
     public Room getRoomById(Long id) {
         return roomRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy phòng"));
@@ -77,10 +91,14 @@ public class RoomService {
         if (room.getAmenities() == null || room.getAmenities().isBlank()) {
             room.setAmenities(String.join("\n", room.getAmenityList()));
         }
+=======
+    public Room saveRoom(Room room) {
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
         return roomRepository.save(room);
     }
 
     public void deleteRoom(Long id) {
+<<<<<<< HEAD
         if (bookingRepository.existsByRoomId(id)) {
             throw new IllegalStateException("Không thể xóa phòng đã có lịch sử đặt phòng");
         }
@@ -179,3 +197,12 @@ public class RoomService {
         return roomRepository.findByStatus(status).size();
     }
 }
+=======
+        roomRepository.deleteById(id);
+    }
+
+    public List<Room> getAvailableRooms() {
+        return roomRepository.findByStatus("Available");
+    }
+}
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb

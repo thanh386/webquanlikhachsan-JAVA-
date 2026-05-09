@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/site :: head('Đăng nhập')}"></head>
@@ -154,4 +155,19 @@
     </script>
 </body>
 
+=======
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <form th:action="@{/login}" method="post">
+        <label>Username: <input type="text" name="username" /></label><br/>
+        <label>Password: <input type="password" name="password" /></label><br/>
+        <button type="submit">Login</button>
+    </form>
+    <a th:href="@{/register}">Register</a>
+</body>
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
 </html>

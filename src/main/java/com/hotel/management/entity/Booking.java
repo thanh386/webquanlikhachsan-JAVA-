@@ -1,5 +1,6 @@
 package com.hotel.management.entity;
 
+<<<<<<< HEAD
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,11 +15,16 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+=======
+import jakarta.persistence.*;
+import java.time.LocalDate;
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
 
 @Entity
 @Table(name = "bookings")
 public class Booking {
 
+<<<<<<< HEAD
     // ── Trạng thái booking (lifecycle) ──────────────────────────────────────
     /** Khách vừa đặt, chờ nhân viên xem xét. */
     public static final String STATUS_CHO_XAC_NHAN  = "Chờ xác nhận";
@@ -38,13 +44,18 @@ public class Booking {
     public static final String PAYMENT_DA_COC          = "Đã cọc";
     public static final String PAYMENT_DA_THANH_TOAN   = "Đã thanh toán";
 
+=======
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+<<<<<<< HEAD
     @Column(length = 64)
     private String bookingCode;
 
+=======
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -59,6 +70,7 @@ public class Booking {
     @Column(nullable = false)
     private LocalDate checkOutDate;
 
+<<<<<<< HEAD
     /** Thời điểm khách thực sự vào phòng (do nhân viên ghi nhận). */
     private LocalDateTime actualCheckInTime;
 
@@ -106,6 +118,12 @@ public class Booking {
     @Column(length = 500)
     private String cancelReason;
 
+=======
+    @Column(nullable = false)
+    private String status; // Confirmed, Cancelled, Completed
+
+    // Constructors, getters, setters
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
     public Booking() {}
 
     public Booking(User user, Room room, LocalDate checkInDate, LocalDate checkOutDate, String status) {
@@ -116,6 +134,7 @@ public class Booking {
         this.status = status;
     }
 
+<<<<<<< HEAD
     // ── Getters & Setters ──────────────────────────────────────────────────
 
     public Long getId() { return id; }
@@ -266,3 +285,19 @@ public class Booking {
         updatedAt = LocalDateTime.now();
     }
 }
+=======
+    // Getters and setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
+    public Room getRoom() { return room; }
+    public void setRoom(Room room) { this.room = room; }
+    public LocalDate getCheckInDate() { return checkInDate; }
+    public void setCheckInDate(LocalDate checkInDate) { this.checkInDate = checkInDate; }
+    public LocalDate getCheckOutDate() { return checkOutDate; }
+    public void setCheckOutDate(LocalDate checkOutDate) { this.checkOutDate = checkOutDate; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+}
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb

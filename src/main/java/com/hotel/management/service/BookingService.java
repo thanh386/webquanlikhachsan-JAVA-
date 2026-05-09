@@ -2,6 +2,7 @@ package com.hotel.management.service;
 
 import com.hotel.management.entity.Booking;
 import com.hotel.management.entity.Room;
+<<<<<<< HEAD
 import com.hotel.management.entity.User;
 import com.hotel.management.repository.BookingRepository;
 import com.hotel.management.repository.RoomRepository;
@@ -24,6 +25,16 @@ import java.util.UUID;
 @Service
 public class BookingService {
     private static final Logger LOGGER = LoggerFactory.getLogger(BookingService.class);
+=======
+import com.hotel.management.repository.BookingRepository;
+import com.hotel.management.repository.RoomRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
+@Service
+public class BookingService {
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
 
     @Autowired
     private BookingRepository bookingRepository;
@@ -31,6 +42,7 @@ public class BookingService {
     @Autowired
     private RoomRepository roomRepository;
 
+<<<<<<< HEAD
     // ── Tạo booking ─────────────────────────────────────────────────────────
 
     @Transactional
@@ -454,3 +466,32 @@ public class BookingService {
         );
     }
 }
+=======
+    public Booking createBooking(Booking booking) {
+        Room room = booking.getRoom();
+        if (!"Available".equals(room.getStatus())) {
+            throw new RuntimeException("Room is not available");
+        }
+        room.setStatus("Occupied");
+        roomRepository.save(room);
+        return bookingRepository.save(booking);
+    }
+
+    public List<Booking> getBookingsByUser(Long userId) {
+        return bookingRepository.findByUserId(userId);
+    }
+
+    public List<Booking> getAllBookings() {
+        return bookingRepository.findAll();
+    }
+
+    public void cancelBooking(Long id) {
+        Booking booking = bookingRepository.findById(id).orElseThrow();
+        booking.setStatus("Cancelled");
+        Room room = booking.getRoom();
+        room.setStatus("Available");
+        roomRepository.save(room);
+        bookingRepository.save(booking);
+    }
+}
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb

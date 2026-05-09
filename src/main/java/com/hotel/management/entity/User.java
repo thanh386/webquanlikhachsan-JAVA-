@@ -1,5 +1,6 @@
 package com.hotel.management.entity;
 
+<<<<<<< HEAD
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -11,6 +12,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
+=======
+import jakarta.persistence.*;
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
 import java.util.Set;
 
 @Entity
@@ -30,6 +34,7 @@ public class User {
     @Column(nullable = false)
     private String email;
 
+<<<<<<< HEAD
     /** Họ và tên đầy đủ — bắt buộc trong quy trình nhận phòng thực tế. */
     @Column(length = 150)
     private String fullName;
@@ -42,12 +47,18 @@ public class User {
     @Column(length = 30)
     private String idCard;
 
+=======
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     private Set<String> roles;
 
+<<<<<<< HEAD
     // Hàm tạo, getter, setter
+=======
+    // Constructors, getters, setters
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
     public User() {}
 
     public User(String username, String password, String email, Set<String> roles) {
@@ -57,7 +68,11 @@ public class User {
         this.roles = roles;
     }
 
+<<<<<<< HEAD
     // Getter và setter
+=======
+    // Getters and setters
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getUsername() { return username; }
@@ -68,6 +83,7 @@ public class User {
     public void setEmail(String email) { this.email = email; }
     public Set<String> getRoles() { return roles; }
     public void setRoles(Set<String> roles) { this.roles = roles; }
+<<<<<<< HEAD
 
     public String getFullName() { return fullName; }
     public void setFullName(String fullName) { this.fullName = fullName; }
@@ -85,3 +101,6 @@ public class User {
         return (fullName != null && !fullName.isBlank()) ? fullName.trim() : username;
     }
 }
+=======
+}
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb

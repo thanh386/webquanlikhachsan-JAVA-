@@ -8,6 +8,7 @@
         <version>3.1.0</version>
         <relativePath/>
     </parent>
+<<<<<<< HEAD
 
     <groupId>com.hotel</groupId>
     <artifactId>hotel-management</artifactId>
@@ -21,6 +22,16 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
+=======
+    <groupId>com.hotel</groupId>
+    <artifactId>hotel-management</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>HotelManagement</name>
+    <description>Hotel Management System</description>
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -39,6 +50,7 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
+<<<<<<< HEAD
             <groupId>nz.net.ultraq.thymeleaf</groupId>
             <artifactId>thymeleaf-layout-dialect</artifactId>
         </dependency>
@@ -47,20 +59,26 @@
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         </dependency>
         <dependency>
+=======
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>
+<<<<<<< HEAD
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>
+=======
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+<<<<<<< HEAD
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
@@ -68,6 +86,9 @@
         </dependency>
     </dependencies>
 
+=======
+    </dependencies>
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
     <build>
         <plugins>
             <plugin>
@@ -76,4 +97,8 @@
             </plugin>
         </plugins>
     </build>
+<<<<<<< HEAD
 </project>
+=======
+</project>
+>>>>>>> da444c50eedca965c53767edb4158b0605b15cfb
